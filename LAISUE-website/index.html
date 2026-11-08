@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ลายสือ LAISUE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="ลายสือ โปรแกรมสร้างฟอนต์ภาษาไทยจากลายมือสำหรับ macOS แจกฟรีสำหรับนักเรียนและนักศึกษาไทย">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;800&display=swap">
+<style>
+/* Layout: a 1984 Macintosh desktop. Each part of the site is a window with a striped title bar,
+   a one-pixel-style black frame and one level of solid shadow, set on a fine dot pattern.
+   Black and white only, one typeface (Sarabun, the open version of TH Sarabun New), as in LAISUE 2.x. */
+:root{
+  --paper:#ffffff;
+  --ink:#000000;
+  --desk:#f4f4f4;
+  --dot:#c2c2c2;
+  --muted:#4d4d4d;
+  --ghost:#bdbdbd;
+  --face:"Sarabun","TH Sarabun New","Thonburi","Noto Sans Thai",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:64px}
+body{
+  margin:0;background-color:var(--desk);
+  background-image:radial-gradient(var(--dot) .75px,transparent 1.1px);
+  background-size:5px 5px;color:var(--ink);
+  font-family:var(--face);font-size:18px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:var(--ink);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+h1,h2,h3{line-height:1.25;text-wrap:balance;margin:0}
+p{margin:0}
+code,.mono{font-family:var(--mono);font-size:.84em}
+
+/* menu bar */
+.menubar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--paper);border-bottom:1.5px solid var(--ink);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mb-in{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:12px;height:36px}
+.menubar nav{flex:1;min-width:0;display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;height:100%}
+.langsw{flex:none;display:flex;border:1.5px solid var(--ink);border-radius:5px;overflow:hidden}
+.langsw button{font:inherit;font-size:14px;font-weight:600;border:0;background:var(--paper);color:var(--ink);padding:1px 10px;cursor:pointer;line-height:1.5}
+.langsw button+button{border-left:1.5px solid var(--ink)}
+.langsw button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+html[data-lang="en"] [data-l="th"],html:not([data-lang="en"]) [data-l="en"]{display:none!important}
+.menubar nav::-webkit-scrollbar{display:none}
+.menubar a{flex:none;text-decoration:none;padding:2px 12px;font-size:16px;white-space:nowrap}
+.menubar a:hover{background:var(--ink);color:var(--paper)}
+.menubar .brand{display:flex;align-items:center;gap:8px;font-weight:800;padding-left:4px}
+.menubar .brand img{width:24px;height:24px;image-rendering:pixelated}
+
+/* page */
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.stack{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:40px;align-items:start}
+.row>*{min-width:0}
+
+/* window */
+.win{background:var(--paper);border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);min-width:0}
+.tb{position:relative;height:26px;border-bottom:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;padding:6px 6px;
+  background:repeating-linear-gradient(var(--ink) 0 1px,var(--paper) 1px 3px) content-box}
+.tb::before{content:"";position:absolute;left:14px;top:50%;width:12px;height:12px;margin-top:-6px;background:var(--paper);border:1.5px solid var(--ink);box-shadow:0 0 0 3px var(--paper)}
+.tb span{background:var(--paper);padding:0 12px;font-weight:600;font-size:15px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 80px)}
+.wb{padding:28px clamp(18px,4vw,40px) 32px;display:flex;flex-direction:column;gap:18px}
+.wb>*{min-width:0}
+.prose{max-width:68ch}
+.lead{font-size:clamp(20px,2.4vw,24px);line-height:1.6}
+.muted{color:var(--muted)}
+.label{font-size:14px;font-weight:600;letter-spacing:.06em}
+h2{font-size:clamp(26px,3.4vw,34px);font-weight:800}
+h3{font-size:22px;font-weight:800}
+hr{border:0;border-top:2px dotted var(--ink);margin:6px 0;width:100%}
+
+/* buttons */
+.btns{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:17px;font-weight:600;text-decoration:none;cursor:pointer;max-width:100%;
+  color:var(--ink);background:var(--paper);border:1.5px solid var(--ink);border-radius:7px;padding:5px 18px;line-height:1.4}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.primary{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--ink);margin:5px}
+.btn[aria-disabled="true"]{color:var(--muted);border-style:dashed;cursor:not-allowed;background:var(--paper)}
+.btn[aria-disabled="true"]:hover{color:var(--muted);background:var(--paper)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* hero */
+.hero .wb{display:grid;grid-template-columns:1fr auto;gap:28px 40px;align-items:center}
+.hero .icon{width:clamp(120px,18vw,192px);height:auto;image-rendering:pixelated}
+.hero h1{font-size:clamp(64px,11vw,120px);font-weight:800;line-height:1;letter-spacing:-.01em}
+.hero h1 small{display:block;font-size:.26em;font-weight:600;letter-spacing:.32em;margin-top:10px}
+.hero .copy{display:flex;flex-direction:column;gap:20px;min-width:0}
+.meta{display:flex;flex-wrap:wrap;gap:6px 0;font-size:15px}
+.meta span{padding-right:14px;margin-right:14px;border-right:1.5px solid var(--ink)}
+.meta span:last-child{border:0}
+.specimen{grid-column:1/-1;border-top:1.5px solid var(--ink);padding-top:20px;display:flex;flex-wrap:wrap;gap:8px 28px;align-items:baseline}
+.specimen b{font-size:clamp(40px,7vw,72px);font-weight:400;line-height:1.5}
+.specimen p{font-size:15px;max-width:34ch}
+@media (max-width:640px){.hero .wb{grid-template-columns:1fr}.hero .icon{order:-1;width:112px}}
+
+figure{margin:0}
+.shot img{display:block;width:100%;height:auto;border-bottom:1.5px solid var(--ink)}
+.shot figcaption{padding:12px 20px;font-size:15px}
+
+/* lists */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:0;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.steps li{padding:16px 18px 16px 0;display:flex;flex-direction:column;gap:6px}
+.steps .n{font-weight:800;font-size:15px}
+.steps h3{font-size:19px}
+.steps p{font-size:16px}
+@media (max-width:860px){.steps li{border-bottom:1px dotted var(--ink)}.steps li:last-child{border-bottom:0}}
+.ticks{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.ticks li{padding-left:28px;position:relative}
+.ticks li::before{content:"";position:absolute;left:4px;top:.72em;width:10px;height:10px;background:var(--ink)}
+ol.num{margin:0;padding-left:1.6em;display:flex;flex-direction:column;gap:10px}
+
+/* files */
+.files{display:flex;flex-direction:column;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.file{display:grid;grid-template-columns:auto 1fr auto;gap:6px 18px;align-items:center;padding:14px 0;border-bottom:1px dotted var(--ink)}
+.file:last-child{border-bottom:0}
+.file .ic{width:38px;height:46px;flex:none}
+.file .nm{font-weight:600;overflow-wrap:anywhere}
+.file .ds{font-size:15px;color:var(--muted)}
+.file .sz{font-variant-numeric:tabular-nums;font-size:15px}
+@media (max-width:640px){.file{grid-template-columns:auto 1fr}.file .act{grid-column:1/-1}}
+
+.cmd{display:flex;align-items:stretch;border:2px solid var(--ink);background:var(--paper);min-width:0}
+.cmd code{flex:1;padding:10px 14px;overflow-x:auto;white-space:nowrap;font-size:15px;min-width:0}
+.cmd button{font:inherit;font-size:15px;font-weight:600;border:0;border-left:2px solid var(--ink);background:var(--paper);padding:0 16px;cursor:pointer}
+.cmd button:hover{background:var(--ink);color:var(--paper)}
+.path{font-family:var(--mono);font-size:.84em;background:var(--desk);padding:1px 6px;border:1px solid var(--ink);white-space:nowrap}
+kbd{font-family:var(--face);font-size:.85em;border:1.5px solid var(--ink);border-radius:4px;padding:0 6px;box-shadow:1px 1px 0 var(--ink)}
+
+.note{border:1.5px dashed var(--ink);padding:14px 18px;font-size:16px}
+.alert{border:1.5px solid var(--ink);padding:16px 20px;display:flex;gap:16px;align-items:flex-start}
+.alert svg{flex:none;width:32px;height:32px;margin-top:2px}
+
+/* lessons */
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{border:1.5px solid var(--ink);padding:0 10px;text-decoration:none;font-size:15px}
+.toc a:hover{background:var(--ink);color:var(--paper)}
+.lesson{display:flex;flex-direction:column;gap:14px;padding-top:24px;border-top:1.5px solid var(--ink)}
+.lesson .k{font-size:14px;font-weight:600;letter-spacing:.06em}
+.figwrap{overflow-x:auto;border:1.5px solid var(--ink);padding:12px 8px 6px}
+.figwrap svg{display:block;width:100%;min-width:560px;height:auto}
+.fl{font-family:var(--face);font-size:15px;fill:var(--ink)}
+.fe{font-size:12px;fill:var(--muted)}
+.cap{font-size:15px;color:var(--muted)}
+dl.terms{margin:0;display:grid;grid-template-columns:minmax(150px,auto) 1fr;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+dl.terms dt,dl.terms dd{margin:0;padding:10px 14px 10px 0;border-bottom:1px dotted var(--ink)}
+dl.terms dt{font-weight:600}
+dl.terms dt small{display:block;font-weight:400;font-size:14px;color:var(--muted)}
+dl.terms dt:nth-last-of-type(1),dl.terms dd:last-child{border-bottom:0}
+@media (max-width:560px){dl.terms{grid-template-columns:1fr}dl.terms dt{border-right:0;border-bottom:0;padding-bottom:0}}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:16px;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+th,td{border:0;border-bottom:1px dotted var(--ink);padding:8px 12px;text-align:left;vertical-align:top}
+th{font-weight:600;border-bottom:2px solid var(--ink)}
+td.marks{font-size:24px;letter-spacing:.12em;white-space:nowrap}
+.cite{white-space:normal}
+.refs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.refs li{padding-left:2em;text-indent:-2em;overflow-wrap:anywhere}
+
+/* status */
+.status{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;border:2px solid var(--ink);padding:2px 12px;align-self:flex-start}
+.status i{width:10px;height:10px;border:2px solid var(--ink);border-radius:50%}
+.status.on i{background:var(--ink)}
+.panes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px}
+.pane{border:1.5px solid var(--ink);padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.big{font-size:56px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.empty{border:2px dashed var(--ghost);color:var(--muted);padding:16px;font-size:15px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:18px}
+.card{border:2px solid var(--ink);display:flex;flex-direction:column}
+.card img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;border-bottom:2px solid var(--ink);background:var(--paper);max-width:100%}
+.card div{padding:10px 14px;font-size:15px}
+.inst{margin:0;padding:0;list-style:none}
+.inst li{padding:8px 0;border-bottom:1px dotted var(--ink)}
+
+footer{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.copybox{display:inline-flex;align-items:stretch;border:2px solid var(--ink);max-width:100%}
+.copybox span{padding:4px 12px;font-family:var(--mono);font-size:15px;user-select:all;overflow-wrap:anywhere}
+.copybox button{font:inherit;font-size:14px;font-weight:600;border:0;border-left:2px solid var(--ink);background:var(--paper);padding:0 12px;cursor:pointer}
+.copybox button:hover{background:var(--ink);color:var(--paper)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+
+
+<header class="menubar">
+  <div class="mb-in">
+    <nav data-l="th" lang="th" aria-label="เมนูหลัก">
+      <a class="brand" href="#top"><img src="assets/laisue-icon.png" alt="" width="24" height="24">ลายสือ</a>
+      <a href="#download">ดาวน์โหลด</a>
+      <a href="#install">ติดตั้งและลบ</a>
+      <a href="#form">แบบฟอร์ม</a>
+      <a href="#lessons">บทเรียน</a>
+      <a href="#research">ร่วมวิจัย</a>
+      <a href="#impact">ผลการนำไปใช้</a>
+      <a href="#about">ผู้พัฒนา</a>
+    </nav>
+    <nav data-l="en" lang="en" aria-label="Main menu">
+      <a class="brand" href="#en-top"><img src="assets/laisue-icon.png" alt="" width="24" height="24">LAISUE</a>
+      <a href="#en-download">Download</a>
+      <a href="#en-install">Install</a>
+      <a href="#en-form">Form</a>
+      <a href="#en-lessons">Lessons</a>
+      <a href="#en-research">Research</a>
+      <a href="#en-impact">Use</a>
+      <a href="#en-about">Developer</a>
+    </nav>
+    <div class="langsw" role="group" aria-label="ภาษา / Language">
+      <button type="button" id="lang-th" data-set-lang="th" lang="th">ไทย</button><button type="button" id="lang-en" data-set-lang="en" lang="en">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top" data-l="th" lang="th">
+<div class="stack">
+
+  <!-- HERO -->
+  <section class="win hero" aria-labelledby="h-hero">
+    <div class="tb"><span>ลายสือ · LAISUE</span></div>
+    <div class="wb">
+      <div class="copy">
+        <h1 id="h-hero">ลายสือ<small>LAISUE</small></h1>
+        <p class="lead">โปรแกรมสร้างฟอนต์ภาษาไทยจากลายมือ สำหรับเครื่อง Mac แจกฟรีให้นักเรียนและนักศึกษาไทย</p>
+        <p class="prose">เขียนตัวอักษรด้วยมือลงแบบฟอร์ม A4 จำนวน 6 หน้า ถ่ายภาพหรือสแกน แล้วให้โปรแกรมอ่านลายมือออกมาเป็นตัวอักษร ลายสือสร้างกฎการวางสระและวรรณยุกต์ให้เองโดยอัตโนมัติ ตรวจการประกอบคำภาษาไทยก่อนส่งออก และส่งออกเป็นฟอนต์ OpenType ที่ใช้ได้ทั้งในโปรแกรมกราฟิกและโปรแกรมเอกสาร ชุดเดียวกันนี้ทำตัวอักษรภาษาอังกฤษได้ด้วย</p>
+        <div class="btns">
+          <a class="btn primary" href="#download">ดาวน์โหลดลายสือ 2.8</a>
+          <a class="btn" href="#install">วิธีติดตั้ง</a>
+        </div>
+        <div class="meta"><span>รุ่น 2.8</span><span>พฤศจิกายน 2569</span><span>macOS 12 ขึ้นไป</span><span>ชิป Apple และ Intel</span></div>
+      </div>
+      <img class="icon" src="assets/laisue-icon.png" alt="ไอคอนโปรแกรมลายสือ ภาพพิกเซลขาวดำรูปกระดาษพับมุมกับตัวอักษร ล" width="192" height="192">
+      <div class="specimen" aria-label="ตัวอย่างคำที่ฟอนต์ไทยต้องวางสระและวรรณยุกต์ให้ถูกที่">
+        <b>น้ำ ที่ ปู่ ฎุ ญุ</b>
+        <p>คำสั้น ๆ เหล่านี้คือจุดที่ฟอนต์ไทยของผู้เริ่มต้นมักพัง ลายสือจัดการให้ตั้งแต่ฟอนต์แรก</p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="win shot">
+    <div class="tb"><span>ลายสือ 2.8</span></div>
+    <img src="assets/laisue-2-8.png" alt="หน้าจอโปรแกรมลายสือรุ่น 2.8 แบบขาวดำ มีกล่องเครื่องมือด้านซ้าย หน้าต่างวาดตัวอักษร ก ตรงกลาง และแผงคุณสมบัติกับตารางตัวอักษรด้านขวา" width="1400" height="860" loading="lazy">
+    <figcaption>หน้าจอลายสือรุ่น 2.8 เครื่องมือและคีย์ลัดเรียงแบบเดียวกับ Adobe Illustrator ส่วนหน้าตาขาวดำได้แรงบันดาลใจจากเครื่อง Macintosh ยุคแรก</figcaption>
+  </figure>
+
+  <div class="row">
+    <section class="win" aria-labelledby="h-why">
+      <div class="tb"><span>ที่มาของโครงการ</span></div>
+      <div class="wb">
+        <h2 id="h-why">ทำไมต้องแจกฟรี</h2>
+        <p class="prose">นักศึกษาออกแบบส่วนใหญ่ใช้โปรแกรมทำฟอนต์ได้เฉพาะในห้องปฏิบัติการของมหาวิทยาลัย เพราะโปรแกรมเชิงพาณิชย์มีราคาสูง กลับไปบ้านก็ทำงานต่อไม่ได้ อีกทั้งโปรแกรมในตลาดไม่ได้สร้างขึ้นเพื่อฟอนต์ไทย กฎการวางสระและวรรณยุกต์ที่ฟอนต์ไทยจำเป็นต้องมี ผู้ออกแบบต้องสร้างเองทั้งหมด ฟอนต์ของผู้เริ่มต้นจึงมักดูดีบนกระดาษ แต่เพี้ยนทันทีที่พิมพ์วรรณยุกต์</p>
+        <p class="prose">ลายสือจึงทำขึ้นเป็นงานวิจัยสร้างสรรค์ที่มุ่งรับใช้สังคม ภายใต้โครงการ <b>การสร้างสรรค์โปรแกรมลายสือ เพื่อให้การออกแบบชุดตัวอักษรไทยเป็นเรื่องง่ายและแพร่หลาย สู่การสืบสานอักษรไทยในยุคดิจิทัล</b> <span class="muted">(Creating LAISUE: Making Thai Typeface Design Easy and Widespread to Sustain the Thai Script in the Digital Age)</span></p>
+        <p class="prose">ฟอนต์ที่ผู้ใช้สร้างด้วยลายสือเป็นของผู้ออกแบบเอง และชื่อผู้ออกแบบจะถูกบันทึกไว้ในแฟ้มฟอนต์ทุกแฟ้ม</p>
+      </div>
+    </section>
+
+    <section class="win" aria-labelledby="h-thai">
+      <div class="tb"><span>สิ่งที่ลายสือทำให้</span></div>
+      <div class="wb">
+        <h2 id="h-thai">งานภาษาไทยที่มองไม่เห็น</h2>
+        <ul class="ticks">
+          <li>หาจุดยึดของสระและวรรณยุกต์บนพยัญชนะทุกตัวจากรูปตัวอักษรที่วาดจริง และแยกตำแหน่งสระบนของ ป ฝ ฟ ฬ ไม่ให้ชนหางสูง</li>
+          <li>ลดสระล่างใต้ ฎ ฏ ใช้ ญ และ ฐ แบบไม่มีเชิงเมื่อตามด้วยสระล่าง ยกวรรณยุกต์ขึ้นเหนือสระบน และแยกสระอำไว้ในตัวฟอนต์</li>
+          <li>ก่อนส่งออก ตรวจการประกอบตัวอักษรไทยทุกแบบด้วยคำไทยจริง และเลื่อนตัวอักษรเฉพาะจุดที่สระหรือวรรณยุกต์จะชนกัน</li>
+          <li>จัดระยะห่าง ระยะชิดเฉพาะคู่ (kerning) และความสูงบรรทัดให้ตัวอักษรไม่ขาดในโปรแกรมเอกสาร</li>
+          <li>สร้างตระกูลฟอนต์ได้สูงสุด 6 รูปแบบ ทั้งตัวบาง ตัวหนา และตัวเอียง โดยรักษาหัวและช่องในตัวอักษรไทยไว้</li>
+          <li>ส่งออกเป็น TTF, OTF และ WOFF2 หน้าจอเลือกได้ทั้งภาษาไทยและภาษาอังกฤษ</li>
+        </ul>
+        <p class="muted" style="font-size:16px">ทุกขั้นที่โปรแกรมทำให้อัตโนมัติ ผู้ออกแบบปรับแก้เองได้ทั้งหมด โปรแกรมเตือนได้ แต่ผู้ออกแบบเป็นผู้ตัดสินใจ</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="win" aria-labelledby="h-flow">
+    <div class="tb"><span>จากกระดาษสู่ฟอนต์</span></div>
+    <div class="wb">
+      <h2 id="h-flow">สี่ขั้นจากลายมือถึงฟอนต์</h2>
+      <ol class="steps">
+        <li><span class="n">ขั้นที่ 1</span><h3>พิมพ์แบบฟอร์ม</h3><p>แบบฟอร์ม A4 หกหน้า หนึ่งช่องต่อหนึ่งตัวอักษร รวม 188 ตัว พิมพ์ที่ขนาด 100%</p></li>
+        <li><span class="n">ขั้นที่ 2</span><h3>เขียนด้วยมือ</h3><p>ใช้ปากกาหรือหมึกสีเข้ม วางตัวอักษรบนเส้นฐาน หรือเขียนบน iPad ด้วยปากกาสีดำ</p></li>
+        <li><span class="n">ขั้นที่ 3</span><h3>ถ่ายภาพหรือสแกน</h3><p>วางกระดาษให้เรียบ ถ่ายตรงจากด้านบนให้เห็นมุมดำทั้งสี่ หรือสแกนที่ 300 dpi</p></li>
+        <li><span class="n">ขั้นที่ 4</span><h3>อ่าน ตรวจ ส่งออก</h3><p>โปรแกรมอ่านเป็นเส้นโค้งที่แก้ไขได้ ตรวจภาษาไทย แล้วส่งออกเป็นฟอนต์</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section class="win" id="download" aria-labelledby="h-dl">
+    <div class="tb"><span>ดาวน์โหลด</span></div>
+    <div class="wb">
+      <h2 id="h-dl">ดาวน์โหลดลายสือ 2.8</h2>
+      <p class="prose">เลือกแฟ้มให้ตรงกับชิปของเครื่อง ดูได้ที่เมนู Apple › เกี่ยวกับ Mac เครื่องนี้ (About This Mac) ในช่องชิปหรือโปรเซสเซอร์ เครื่องที่ใช้ชิป M1, M2, M3, M4 หรือรุ่นใหม่กว่า ให้เลือกแฟ้มสำหรับชิป Apple ส่วนเครื่องที่ใช้ชิป Intel ให้เลือกแฟ้มสำหรับ Intel โปรแกรมต้องใช้ macOS 12 ขึ้นไป</p>
+      <div class="files" id="files-th"></div>
+      <div class="alert">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="22" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><path d="M9 14l5 5 9-10" fill="none" stroke="var(--ink)" stroke-width="3"/></svg>
+        <p>ตัวโปรแกรมไม่ส่งข้อมูลของผู้ใช้หรือแฟ้มงานออกไปยังเซิร์ฟเวอร์ใด ๆ งานทั้งหมดอยู่ในเครื่องของผู้ใช้ ส่วนเชื่อมต่อกับ Claude ทำงานก็ต่อเมื่อผู้ใช้เปิดใช้เองเท่านั้น</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL / UNINSTALL -->
+  <div class="row" id="install">
+    <section class="win" aria-labelledby="h-inst">
+      <div class="tb"><span>การติดตั้ง</span></div>
+      <div class="wb">
+        <h2 id="h-inst">ติดตั้งโปรแกรม</h2>
+        <ol class="num">
+          <li>ดับเบิลคลิกแฟ้ม .dmg ที่ดาวน์โหลดมา แล้วลากไอคอน LAISUE ไปวางในโฟลเดอร์ Applications</li>
+          <li>เปิด LAISUE จากโฟลเดอร์ Applications</li>
+        </ol>
+        <hr>
+        <h3>การเปิดครั้งแรก</h3>
+        <p class="prose">ลายสือรุ่นนี้ยังไม่ได้ลงนามด้วย Apple Developer ID เครื่อง Mac จึงขอให้ผู้ใช้ยืนยันก่อนเปิดครั้งแรก ทำเพียงครั้งเดียว หลังจากนั้นเปิดได้ตามปกติ</p>
+        <ol class="num">
+          <li>ถ้าเครื่องแจ้งว่าเปิดโปรแกรมไม่ได้ ให้กด Done (เสร็จสิ้น)</li>
+          <li>ไปที่ System Settings (การตั้งค่าระบบ) › Privacy &amp; Security (ความเป็นส่วนตัวและความปลอดภัย)</li>
+          <li>เลื่อนลงไปจนพบข้อความเกี่ยวกับ LAISUE กดปุ่ม Open Anyway แล้วยืนยันอีกครั้ง ชื่อปุ่มอาจแสดงเป็นภาษาไทยตามภาษาของเครื่อง</li>
+        </ol>
+        <p class="prose">ถ้าเครื่องแจ้งว่าแอป "เสียหาย" (is damaged) ให้เปิดโปรแกรม Terminal พิมพ์คำสั่งด้านล่าง กด Return แล้วเปิด LAISUE อีกครั้ง</p>
+        <div class="cmd"><code id="cmd-xattr-th">xattr -dr com.apple.quarantine /Applications/LAISUE.app</code><button type="button" data-copy="cmd-xattr-th">คัดลอก</button></div>
+        <p class="muted" style="font-size:16px">ฟอนต์ TH Sarabun New ที่ใช้แสดงข้อความในโปรแกรมรวมมากับโปรแกรมแล้ว ไม่ต้องติดตั้งสิ่งใดเพิ่ม</p>
+      </div>
+    </section>
+
+    <section class="win" aria-labelledby="h-un">
+      <div class="tb"><span>การลบโปรแกรม</span></div>
+      <div class="wb">
+        <h2 id="h-un">ลบโปรแกรมออกจากเครื่อง</h2>
+        <ol class="num">
+          <li>บันทึกงานให้เรียบร้อย แล้วปิดโปรแกรมด้วย <kbd>⌘Q</kbd></li>
+          <li>เปิด Finder ไปที่โฟลเดอร์ Applications ลาก LAISUE ไปที่ถังขยะ แล้วล้างถังขยะ</li>
+          <li>ถ้าต้องการลบข้อมูลที่โปรแกรมสร้างไว้ด้วย ใน Finder เลือกเมนู Go › Go to Folder… (<kbd>⇧⌘G</kbd>) แล้วลบสองรายการนี้ คือโฟลเดอร์ <span class="path">~/.laisue</span> ซึ่งเก็บสำเนาสำรองอัตโนมัติของงาน และแฟ้ม <span class="path">~/Library/Logs/LAISUE.log</span></li>
+        </ol>
+        <div class="note">การลบโปรแกรมไม่ลบแฟ้มงาน (.ls) ที่ผู้ใช้บันทึกไว้ และไม่ลบฟอนต์ที่ติดตั้งในเครื่องแล้ว ถ้าต้องการลบฟอนต์ให้ทำใน Font Book ส่วน TH Sarabun New ที่มากับโปรแกรมไม่ได้ติดตั้งลงในเครื่อง จึงไม่ต้องลบแยก</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FORM -->
+  <section class="win" id="form" aria-labelledby="h-form">
+    <div class="tb"><span>แบบฟอร์ม A4</span></div>
+    <div class="wb">
+      <h2 id="h-form">แบบฟอร์มเขียนตัวอักษร</h2>
+      <p class="prose">แบบฟอร์มมี 6 หน้า แต่ละช่องสำหรับตัวอักษรหนึ่งตัว รวม 188 ตัว ได้แก่ อักขระที่กำหนดแล้วในช่วงอักษรไทยของยูนิโคด 87 ตัวซึ่งรวมเลขไทย อักขระ ASCII ที่พิมพ์ได้ 94 ตัว และเครื่องหมายวรรคตอนทางการพิมพ์อีก 7 ตัว คือ อัญประกาศโค้ง ขีดสั้น ขีดยาว และจุดไข่ปลา ทุกช่องพิมพ์ตัวอักษรและรหัสกำกับไว้ พร้อมเส้นนำสีฟ้าบอกตำแหน่งส่วนลง เส้นฐาน ความสูงตัว x ความสูงตัวพิมพ์ใหญ่ และขอบบนของวรรณยุกต์ ช่องของสระและวรรณยุกต์มี ก สีเทาจาง ๆ ให้เขียนเครื่องหมายลงบนตำแหน่งจริง สระอำให้เขียนต่อจาก ก สีเทาเหมือนเขียนหนังสือตามปกติ</p>
+      <div class="files" id="form-files-th"></div>
+      <div class="row" style="gap:28px">
+        <div class="pane">
+          <h3>วิธีเขียน</h3>
+          <ul class="ticks" style="font-size:16px">
+            <li>วางฐานของตัวอักษรบนเส้นสีฟ้าเข้ม พยัญชนะสูงถึงเส้นความสูงพยัญชนะ</li>
+            <li>ใช้ปากกาหรือหมึกสีเข้ม เช่น ดำ น้ำเงินเข้ม หรือดินสอดำเข้ม</li>
+            <li>อย่าเขียนทับสี่เหลี่ยมดำที่มุมกระดาษ เพราะโปรแกรมใช้หาตำแหน่งหน้า</li>
+            <li>เขียนบน iPad ได้ โดยเปิด PDF ในแอปที่เขียนบน PDF ได้ ใช้ปากกาสีดำหรือสีเข้ม แล้วบันทึกเป็น PDF</li>
+          </ul>
+        </div>
+        <div class="pane">
+          <h3>วิธีถ่ายภาพ</h3>
+          <ul class="ticks" style="font-size:16px">
+            <li>วางกระดาษให้เรียบ ถ่ายตรงจากด้านบนให้เห็นทั้งแผ่นและมุมดำครบทั้งสี่มุม</li>
+            <li>ใช้แสงสม่ำเสมอ ระวังเงามือหรือเงาโทรศัพท์ แตะหน้าจอให้โฟกัสก่อนถ่าย</li>
+            <li>ไม่ให้มีนิ้ว ปากกา ยางลบ หรือสิ่งอื่นวางบนกระดาษ ถ่ายทีละแผ่น</li>
+            <li>ถ้ามีเครื่องสแกน การสแกนที่ 300 dpi ให้ผลดีที่สุด</li>
+          </ul>
+        </div>
+      </div>
+      <h3>ข้อจำกัดของการอ่านภาพในรุ่นนี้</h3>
+      <ul class="ticks" style="font-size:16px">
+        <li>ผลการอ่านขึ้นกับคุณภาพของภาพ ภาพที่เบลอมาก มืด หรือมีเงาเข้มพาดตัวอักษร อาจทำให้ตัวอักษรหายหรือได้รูปต่างจากที่เขียน</li>
+        <li>ถ้ามีสิ่งของวางบนแบบฟอร์ม โปรแกรมจะบอกชื่อตัวอักษรที่ถูกบังและไม่อ่านตัวนั้น แต่ของชิ้นเล็กสีเข้มที่อยู่ในช่องเดียว เช่น ฝาปากกา อาจถูกอ่านรวมเป็นส่วนหนึ่งของตัวอักษร โดยมีเพียงคำเตือนว่าชนขอบช่อง</li>
+        <li>หมึกสีฟ้าสด เช่น ปากกาสีฟ้าบน iPad มีสีใกล้กับเส้นนำของแบบฟอร์มจึงถูกลบออกไปด้วย ให้เขียนด้วยสีเข้มแทน</li>
+        <li>ดินสอที่จางมาก จุดที่เล็กมาก และภาพที่หมึกซีดจนเกือบเป็นสีกระดาษ อาจอ่านไม่ได้ ลองปรับความไวหมึกก่อนอ่าน หรือวาดตัวนั้นในโปรแกรม</li>
+      </ul>
+      <p class="muted" style="font-size:16px">ตัวอักษรใดที่อ่านไม่ได้หรืออ่านผิด วาดหรือแก้ในโปรแกรมได้เสมอด้วยเครื่องมือแปรง (Brush) หรือปากกา (Pen) สำหรับผู้ที่ถนัดวาดในโปรแกรมเวกเตอร์ ลายสือมีแม่แบบดิจิทัลเป็นแฟ้ม .ai และ .svg ที่เรียงช่องและเส้นนำแบบเดียวกัน</p>
+    </div>
+  </section>
+
+  <!-- LESSONS -->
+  <section class="win" id="lessons" aria-labelledby="h-les">
+    <div class="tb"><span>บทเรียนการออกแบบตัวอักษร</span></div>
+    <div class="wb">
+      <h2 id="h-les">บทเรียนการออกแบบตัวอักษรไทยและละติน</h2>
+      <p class="prose">เนื้อหาเรียบเรียงจากบทที่ 2 ของรายงานวิจัยลายสือ ข้อเท็จจริงทุกข้อมีแหล่งอ้างอิงกำกับ และรายการเอกสารอ้างอิงพร้อมลิงก์อยู่ท้ายบทเรียน แผนภาพในบทที่ 2 และบทที่ 5 สร้างจากเส้นขอบจริงของฟอนต์ Sarabun ตามค่าที่วัดได้จากแฟ้มฟอนต์</p>
+      <nav class="toc" aria-label="สารบัญบทเรียน">
+        <a href="#l1">1 ตัวอักษรเกิดจากเส้น</a>
+        <a href="#l2">2 โครงสร้างอักษรละติน</a>
+        <a href="#l3">3 หัว ขมวด และโครงสร้างอักษรไทย</a>
+        <a href="#l4">4 อักษรไทยกับเทคโนโลยีการพิมพ์</a>
+        <a href="#l5">5 ตำแหน่งสระและวรรณยุกต์</a>
+        <a href="#l6">6 อักษรไทยในแฟ้มฟอนต์</a>
+        <a href="#l7">7 ฟอนต์แห่งชาติและ TH Sarabun New</a>
+        <a href="#refs">เอกสารอ้างอิง</a>
+      </nav>
+
+      <article class="lesson" id="l1">
+        <span class="k">บทที่ 1</span>
+        <h3>ตัวอักษรเกิดจากเส้น</h3>
+        <p class="prose">แกร์ริต โนร์ดซาย (Gerrit Noordzij) นักออกแบบตัวอักษรชาวเนเธอร์แลนด์ วางทฤษฎีการเขียนไว้ในหนังสือ <i>The Stroke: Theory of Writing</i> ว่ารูปตัวอักษรทั้งหมดพัฒนามาจากเส้น (stroke) คือร่องรอยที่เครื่องมือเขียนทิ้งไว้เมื่อเคลื่อนไปบนพื้นผิว ตัวพิมพ์เองก็มีรากมาจากการเขียนเช่นกัน โนร์ดซายอธิบายความหนาบางของเส้นด้วยแบบจำลองสองแบบ คือการเลื่อนปลายเครื่องมือที่หน้ากว้างคงที่ไปตามแนวเส้น (translation) และการกดเครื่องมือให้เส้นขยายกว้างขึ้น (expansion) หนังสือเล่มนี้พิมพ์ครั้งแรกเป็นภาษาดัตช์ในชื่อ <i>De streek</i> เมื่อ ค.ศ. 1985 และฉบับภาษาอังกฤษแปลโดย Peter Enneson <span class="cite">(<a href="#r-noordzij">Noordzij, 1985/2005</a>)</span></p>
+        <p class="prose">ถ้าตัวอักษรเกิดจากเส้น นักศึกษาที่เขียนตัวอักษรด้วยมือลงกระดาษก็กำลังทำงานหลักของการออกแบบตัวอักษรอยู่แล้ว หน้าที่ของเครื่องมือดิจิทัลคือรักษาเส้นนั้นไว้ ไม่ใช่วาดขึ้นใหม่แทน ลายสือจึงเริ่มจากลายมือบนแบบฟอร์ม ลากเส้นตามตัวอักษรแต่ละตัวเป็นเส้นโค้งเรียบโดยคงรูปเดิม และเครื่องมือแปรงในโปรแกรมมีทั้งหัวกลมและหัวแบนเอียงมุม ให้นักศึกษาสร้างน้ำหนักเส้นหนาบางได้แบบเดียวกับปากกาหัวตัด</p>
+      </article>
+
+      <article class="lesson" id="l2">
+        <span class="k">บทที่ 2</span>
+        <h3>โครงสร้างแนวตั้งของอักษรละติน</h3>
+        <p class="prose">นักออกแบบตัวอักษรอธิบายตัวอักษรด้วยส่วนประกอบและเส้นแนวนอนที่ส่วนประกอบเหล่านั้นวางอยู่ ศัพท์ชุดนี้คือพื้นฐานของแบบฟอร์ม หน้าต่างวาด และการตรวจของลายสือ</p>
+        <div class="figwrap"><svg viewBox="0 0 911 300" role="img" aria-label="โครงสร้างแนวตั้งของอักษรละติน" class="fig">
+<line x1="0" x2="911" y1="66.8" y2="66.8" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="60.8" class="fl">ส่วนขึ้น <tspan class="fe">ascender · 742</tspan></text>
+<line x1="0" x2="911" y1="76.0" y2="76.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="93.0" class="fl">ความสูงตัวพิมพ์ใหญ่ <tspan class="fe">cap height · 700</tspan></text>
+<line x1="0" x2="911" y1="120.0" y2="120.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="114.0" class="fl">ความสูงตัว x <tspan class="fe">x-height · 500</tspan></text>
+<line x1="0" x2="911" y1="230.0" y2="230.0" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="none"/>
+<text x="4" y="224.0" class="fl">เส้นฐาน <tspan class="fe">baseline · 0</tspan></text>
+<line x1="0" x2="911" y1="283.2" y2="283.2" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="277.2" class="fl">ส่วนลง <tspan class="fe">descender · -242</tspan></text>
+<path d="M307.6 76.0H327.84000000000003V143.76H401.32V76.0H421.56V230.0H401.32V160.48000000000002H327.84000000000003V230.0H307.6Z M480.08 174.12 444.43999999999994 120.0H465.34L489.76 160.92000000000002L514.18 120.0H535.0799999999999L499.43999999999994 174.12L537.9399999999999 230.0H516.8199999999999L489.76 186.0L462.7 230.0H441.58Z M541.24 173.02Q541.24 156.3 546.96 143.87Q552.68 131.44 563.24 124.62Q573.8 117.8 587.88 117.8Q608.12 117.8 620.44 134.74H620.88V66.75999999999999H639.36V202.28Q639.36 222.74 640.02 230.0H622.86Q622.42 224.72 622.42 212.62H621.98Q616.92 221.42 607.46 226.81Q598.0 232.2 587.4399999999999 232.2Q566.1 232.2 553.6700000000001 216.36Q541.24 200.52 541.24 173.02ZM620.66 186.0V165.98000000000002Q620.66 150.57999999999998 612.3 141.33999999999997Q603.94 132.1 590.08 132.1Q576.0 132.1 567.97 142.99Q559.9399999999999 153.88 559.9399999999999 173.46Q559.9399999999999 193.92000000000002 567.97 205.58Q576.0 217.24 590.08 217.24Q604.16 217.24 612.41 208.77Q620.66 200.3 620.66 186.0Z M666.86 147.72Q666.86 133.64 665.98 120.0H683.14Q683.8 128.14 683.8 137.38H684.24Q688.86 128.57999999999998 698.54 123.19Q708.22 117.8 719.44 117.8Q740.78 117.8 752.88 132.98Q764.98 148.16 764.98 175.0Q764.98 192.38 759.26 205.25Q753.54 218.12 743.0899999999999 225.16Q732.64 232.2 718.78 232.2Q707.34 232.2 698.76 227.8Q690.18 223.4 686.22 215.48H685.56V283.24H666.86ZM746.28 174.34Q746.28 154.32 738.36 143.54Q730.44 132.76 716.14 132.76Q702.72 132.76 694.14 141.56Q685.56 150.36 685.56 164.0V184.02Q685.56 199.2 693.92 208.55Q702.28 217.9 715.92 217.9Q730.0 217.9 738.14 206.13Q746.28 194.36 746.28 174.34Z M780.8199999999999 175.0Q780.8199999999999 157.62 787.31 144.64Q793.8 131.66 805.79 124.72999999999999Q817.78 117.8 834.06 117.8Q858.6999999999999 117.8 873.1099999999999 133.2Q887.52 148.6 887.52 175.0Q887.52 201.4 873.1099999999999 216.8Q858.6999999999999 232.2 834.06 232.2Q817.78 232.2 805.79 225.26999999999998Q793.8 218.34 787.31 205.36Q780.8199999999999 192.38 780.8199999999999 175.0ZM868.8199999999999 175.0Q868.8199999999999 154.98000000000002 859.5799999999999 143.54000000000002Q850.3399999999999 132.1 834.06 132.1Q818.0 132.1 808.76 143.54000000000002Q799.52 154.98000000000002 799.52 175.0Q799.52 195.02 808.76 206.46Q818.0 217.9 834.06 217.9Q850.3399999999999 217.9 859.5799999999999 206.46Q868.8199999999999 195.02 868.8199999999999 175.0Z" fill="var(--ink)"/>
+</svg></div>
+        <p class="cap">ภาพที่ 1 เส้นแนวนอนของอักษรละติน แสดงด้วยตัว H x d p o ของฟอนต์ Sarabun ตัวเลขท้ายชื่อเส้นคือค่าในหน่วยฟอนต์ (1,000 หน่วยต่อความสูงตัวอักษร) วัดจากแฟ้มฟอนต์</p>
+        <dl class="terms">
+          <dt>เส้นฐาน<small>baseline</small></dt><dd>เส้นที่มองไม่เห็นซึ่งตัวอักษรทั้งบรรทัดวางอยู่ ใช้เป็นจุดตั้งต้นในการวัดค่าอื่น ๆ เช่น ระยะบรรทัดและความสูงตัว x <span class="cite">(<a href="#r-gf-baseline">Google Fonts, n.d.-b</a>)</span></dd>
+          <dt>ความสูงตัว x<small>x-height</small></dt><dd>ความสูงของอักษรตัวเล็กที่ไม่มีส่วนขึ้นหรือส่วนลง เป็นตัวบอกว่าตัวพิมพ์ดูใหญ่หรือเล็ก <span class="cite">(<a href="#r-gf-xh">Google Fonts, n.d.-h</a>)</span></dd>
+          <dt>ความสูงตัวพิมพ์ใหญ่<small>cap height</small></dt><dd>ความสูงของอักษรตัวพิมพ์ใหญ่ วัดจากเส้นฐานถึงยอดตัวอักษร ปกติต่ำกว่าระดับส่วนขึ้นเล็กน้อย <span class="cite">(<a href="#r-gf-cap">Google Fonts, n.d.-c</a>)</span> ในภาพที่ 1 ตัว H สูง 700 หน่วย ส่วนยอดของ d สูง 742 หน่วย</dd>
+          <dt>ส่วนขึ้น ส่วนลง<small>ascender, descender</small></dt><dd>ส่วนของตัวอักษรที่ยื่นขึ้นเหนือความสูงตัว x หรือห้อยลงต่ำกว่าเส้นฐาน เช่น ก้านของ d และหางของ p <span class="cite">(<a href="#r-gf-asc">Google Fonts, n.d.-a</a>)</span></dd>
+          <dt>ช่องในตัวอักษร<small>counter</small></dt><dd>พื้นที่ว่างที่ถูกล้อมไว้ภายในตัวอักษร อาจปิดสนิทอย่างใน o และ d หรือเปิดด้านหนึ่งอย่างใน c และ u <span class="cite">(<a href="#r-gf-counter">Google Fonts, n.d.-d</a>)</span></dd>
+          <dt>ส่วนเกินเส้น<small>overshoot</small></dt><dd>ส่วนของตัวอักษรที่ยื่นเลยขอบเขตแนวตั้งของตัวที่มีด้านแบน <span class="cite">(<a href="#r-gf-over">Google Fonts, n.d.-e</a>)</span> ตัวกลมต้องเกินเส้นเล็กน้อยจึงจะดูสูงเท่าตัวแบน ในภาพที่ 1 ตัว o ของ Sarabun ลงต่ำกว่าเส้นฐาน 10 หน่วย และสูงเกินความสูงตัว x อีก 10 หน่วย</dd>
+          <dt>ระยะห่าง<small>spacing</small></dt><dd>การกำหนดพื้นที่ว่างแนวนอนรอบตัวอักษรแต่ละตัว <span class="cite">(<a href="#r-gf-spacing">Google Fonts, n.d.-f</a>)</span> เป็นตัวตัดสินว่าบรรทัดข้อความจะอ่านเป็นผืนเรียบสม่ำเสมอหรือไม่</dd>
+        </dl>
+        <p class="prose">ศัพท์เหล่านี้ปรากฏในลายสือเป็นการตัดสินใจเชิงปฏิบัติ แบบฟอร์มพิมพ์เส้นฐาน ความสูงตัว x ความสูงตัวพิมพ์ใหญ่ และส่วนลงเป็นเส้นนำ ตัวอ่านภาพคงส่วนเกินเส้นไว้แทนการตัดตัวอักษรให้แบนตามเส้น และโปรแกรมตั้งระยะห่างข้างตัวอักษรจากรูปของตัวอักษรเอง ซึ่งผู้ออกแบบแก้ไขต่อได้</p>
+      </article>
+
+      <article class="lesson" id="l3">
+        <span class="k">บทที่ 3</span>
+        <h3>หัว ขมวด และโครงสร้างของอักษรไทย</h3>
+        <p class="prose">ลักษณะเด่นที่สุดของอักษรไทยคือหัว เบ็น มิตเชลล์ (Ben Mitchell) แยกห่วงในตัวอักษรไทยเป็นสองแบบ แบบแรกคือหัว ซึ่งเป็นจุดเริ่มของตัวอักษรเมื่อเขียนด้วยมือ แบบที่สองคือขมวด ซึ่งเป็นส่วนหนึ่งของรูปตัวอักษรและเกิดขึ้นตรงที่เส้นตัดกัน มิตเชลล์ชี้ว่าหัวของอักษรไทยต่างจากเชิง (serif) ของอักษรละติน เพราะหัวมีหน้าที่ทางความหมาย ตัวอักษรที่มีรูปคล้ายกันแยกจากกันได้ด้วยทิศทางของหัว เขายังตั้งข้อสังเกตว่าอักษรไทยโดยขนบมีสัดส่วนค่อนข้างแคบ และส่วนที่บอกความแตกต่างของตัวอักษรมักอยู่ทางด้านบน <span class="cite">(<a href="#r-mitchell">Mitchell, 2014</a>)</span> สำหรับผู้เรียน ข้อนี้หมายความว่าหัวที่วาดพลาดเพียงเล็กน้อยอาจเปลี่ยนตัวอักษรตัวหนึ่งเป็นอีกตัวหนึ่งได้</p>
+        <p class="prose">โรงออกแบบตัวอักษร Cadson Demak อธิบายว่าแบบมีหัวและแบบไม่มีหัวเป็นการจำแนกเชิงโครงสร้างที่มีเฉพาะในอักษรไทย ไม่ใช่ฉบับไทยของตัวมีเชิงและไม่มีเชิงแบบละติน และอักษรไทยไม่ได้เรียงเป็นเส้นตรงเท่านั้น แต่มีลักษณะเชิงสถาปัตยกรรม เพราะสระและวรรณยุกต์วางอยู่ทั้งด้านบน ด้านล่าง และรอบพยัญชนะ <span class="cite">(<a href="#r-cadson">Cadson Demak, 2025</a>)</span> ลายสือไม่เลือกข้างระหว่างแบบมีหัวและไม่มีหัว โปรแกรมอ่านตามที่ผู้เรียนเขียน แต่ถือว่าโครงสร้างแนวตั้งของบรรทัดไทยเป็นส่วนหนึ่งของงานออกแบบที่ฟอนต์ต้องจัดการ ไม่ปล่อยให้เป็นเรื่องบังเอิญ</p>
+        <p class="prose">งานวิจัยด้านการมองเห็นและการอ่านออกของตัวพิมพ์ไทยสนับสนุนแนวคิดเดียวกัน ราชภูมิ ปั้นทรงเสริม (Rachapoom Punsongserm) และคณะ ทดสอบตัวพิมพ์ไทยในสภาพภาพเบลอ พบว่าหัวกลมช่วยให้เห็นพื้นที่ว่างภายในตัวอักษรได้ชัดกว่าหัวแบบอื่น และเส้นที่น้ำหนักสม่ำเสมอมองเห็นได้ดีกว่าเส้นที่หนาบางต่างกันมาก <span class="cite">(<a href="#r-punsongserm">Punsongserm et al., 2017</a>)</span> บทเรียนสำหรับเครื่องมือการสอนจึงชัดเจน หัว ช่องในตัวอักษร และหางที่ผู้เรียนวาด ต้องรอดผ่านการแปลงเป็นดิจิทัลและการเปลี่ยนน้ำหนักเส้นโดยอัตโนมัติ ลายสือจึงรักษาหัวและช่องไม่ให้ทึบเมื่อทำตัวหนา</p>
+      </article>
+
+      <article class="lesson" id="l4">
+        <span class="k">บทที่ 4</span>
+        <h3>อักษรไทยกับเทคโนโลยีการพิมพ์</h3>
+        <p class="prose">ประชา สุวีรานนท์ เริ่มประวัติศาสตร์ตัวพิมพ์ไทยที่แท่นพิมพ์ซึ่งมิชชันนารีอเมริกัน แดน บีช แบรดลีย์ (Dan Beach Bradley) นำเข้ามาใน ค.ศ. 1835 ตัวพิมพ์โลหะภาษาไทยต้องมีมากกว่า 210 ตัว ขณะที่ภาษาละตินใช้ราว 70 ตัว เพราะช่างพิมพ์ต้องหล่อพยัญชนะทั้งแบบเต็มตัวและแบบครึ่งตัวเพื่อรองรับเครื่องหมายที่ซ้อนกัน <span class="cite">(<a href="#r-suveeranont">Suveeranont, 2025</a>)</span></p>
+        <p class="prose">ประวัติศาสตร์ช่วงนี้มีสองเหตุการณ์ที่เกี่ยวกับการออกแบบฟอนต์โดยตรง เหตุการณ์แรกคือปัญหาที่ผู้เขียนเรียกว่าหัวตัน หมึกที่ซึมในการพิมพ์ระบบเลตเตอร์เพรสอาจอุดหัวขนาดเล็กของตัวอักษรไทย ช่างพิมพ์จึงตัดหัวให้สั้นลงเพื่อป้องกัน อันตรายแบบเดียวกันกลับมาในรูปดิจิทัลทุกครั้งที่โปรแกรมทำตัวอักษรให้หนาขึ้น เหตุการณ์ที่สองคือข้อถกเถียงเรื่องหัวที่ยืดเยื้อ ใน ค.ศ. 1974 คณะกรรมการของรัฐเปรียบหัวกับเชิง เรียกตัวไม่มีหัวว่าเป็นแบบที่ทำให้เป็นละติน และจำกัดให้ใช้กับพาดหัวเชิงพาณิชย์ ต่อมาใน ค.ศ. 2013 ระบบ iOS 7 รุ่นทดสอบของ Apple ใช้ฟอนต์ไม่มีหัว Sukhumvit ของ Cadson Demak กับข้อความภาษาไทย ผู้ใช้คัดค้านอย่างหนัก และรุ่น 7.0.1 กลับไปใช้ Thonburi <span class="cite">(<a href="#r-suveeranont">Suveeranont, 2025</a>)</span> เหตุการณ์นี้แสดงว่าผู้อ่านชาวไทยรู้สึกต่อรูปตัวอักษรที่อ่านทุกวันอย่างรุนแรงเพียงใด และเป็นเหตุผลที่เครื่องมือสำหรับนักศึกษาควรรองรับทั้งแบบมีหัวและไม่มีหัวโดยไม่เอนเอียง</p>
+      </article>
+
+      <article class="lesson" id="l5">
+        <span class="k">บทที่ 5</span>
+        <h3>ตำแหน่งของสระและวรรณยุกต์</h3>
+        <p class="prose">พยัญชนะไทยส่วนใหญ่อยู่ระหว่างเส้นฐานกับความสูงพยัญชนะระดับเดียว แต่ไม่ทุกตัว ในภาพที่ 2 ป มีหางสูงเกินความสูงพยัญชนะ ส่วน ญ และ ฎ มีส่วนห้อยลงต่ำกว่าเส้นฐาน คำศัพท์ส่วนประกอบของอักษรไทย เช่น หัว หาง เส้นตั้ง และเส้นนอน ใช้เป็นภาษากลางในการวิเคราะห์ตัวอักษรเหล่านี้</p>
+        <div class="figwrap"><svg viewBox="0 0 918 300" role="img" aria-label="ตำแหน่งแนวตั้งของอักษรไทย" class="fig">
+<line x1="0" x2="918" y1="47.0" y2="47.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="41.0" class="fl">วรรณยุกต์เหนือสระบน <tspan class="fe">tone above vowel · 1200</tspan></text>
+<line x1="0" x2="918" y1="89.6" y2="89.6" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="83.6" class="fl">สระบน <tspan class="fe">upper vowel · 896</tspan></text>
+<line x1="0" x2="918" y1="133.0" y2="133.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="127.0" class="fl">ความสูงพยัญชนะ <tspan class="fe">consonant height · 586</tspan></text>
+<line x1="0" x2="918" y1="215.0" y2="215.0" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="none"/>
+<text x="4" y="209.0" class="fl">เส้นฐาน <tspan class="fe">baseline · 0</tspan></text>
+<line x1="0" x2="918" y1="261.2" y2="261.2" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="255.2" class="fl">สระล่างและหางล่าง <tspan class="fe">below · -330</tspan></text>
+<path d="M381.34000000000003 101.17999999999999V197.5Q381.34000000000003 206.32 373.43 211.36Q365.52 216.4 351.38 216.4Q337.66 216.4 329.54 211.36Q321.42 206.32 321.42 197.5V160.82Q319.32 161.51999999999998 317.36 161.51999999999998Q311.2 161.51999999999998 307.21000000000004 157.52999999999997Q303.22 153.54 303.22 147.1Q303.22 140.94 307.42 136.95Q311.62 132.95999999999998 318.06 132.95999999999998Q324.78 132.95999999999998 329.04999999999995 137.08999999999997Q333.32 141.22 333.32 147.8V196.24Q333.32 201.0 338.28999999999996 203.87Q343.26 206.74 351.38 206.74Q359.92 206.74 364.68 203.94Q369.44 201.14 369.44 196.24V101.17999999999999ZM317.5 153.82Q320.44 153.82 322.26 151.93Q324.08 150.04 324.08 147.24Q324.08 144.44 322.26 142.55Q320.44 140.66 317.5 140.66Q314.7 140.66 312.81 142.55Q310.92 144.44 310.92 147.24Q310.92 150.04 312.81 151.93Q314.7 153.82 317.5 153.82Z  M507.34000000000003 150.18V215.0H495.44000000000005V150.32Q495.44000000000005 143.18 490.82000000000005 143.18Q488.58000000000004 143.18 487.39000000000004 144.23Q486.20000000000005 145.27999999999997 485.36 147.38L459.6 215.0H447.14000000000004V160.82Q445.04 161.51999999999998 443.08000000000004 161.51999999999998Q436.92 161.51999999999998 432.93000000000006 157.52999999999997Q428.94000000000005 153.54 428.94000000000005 147.1Q428.94000000000005 140.94 433.14000000000004 136.95Q437.34000000000003 132.95999999999998 443.78000000000003 132.95999999999998Q450.5 132.95999999999998 454.77 137.08999999999997Q459.04 141.22 459.04 147.8V184.48Q459.04 190.07999999999998 457.92 198.76L461.84000000000003 183.92L475.98 145.56Q480.6 132.95999999999998 492.36 132.95999999999998Q507.34000000000003 132.95999999999998 507.34000000000003 150.18ZM443.22 153.82Q446.16 153.82 447.98 151.93Q449.8 150.04 449.8 147.24Q449.8 144.44 447.98 142.55Q446.16 140.66 443.22 140.66Q440.42 140.66 438.53000000000003 142.55Q436.64000000000004 144.44 436.64000000000004 147.24Q436.64000000000004 150.04 438.53000000000003 151.93Q440.42 153.82 443.22 153.82Z M506.91999999999996 122.32Q496.69999999999993 118.25999999999999 483.4699999999999 116.08999999999999Q470.23999999999995 113.91999999999999 457.78 113.91999999999999Q449.09999999999997 113.91999999999999 443.0799999999999 114.89999999999999Q443.78 103.27999999999999 451.9 96.41999999999999Q460.0199999999999 89.55999999999999 473.17999999999995 89.55999999999999Q486.9 89.55999999999999 495.71999999999997 97.25999999999999V81.72H505.79999999999995V115.17999999999999Q506.35999999999996 117.55999999999999 506.91999999999996 122.32ZM496.28 112.38Q493.05999999999995 104.82 487.03999999999996 101.03999999999999Q481.02 97.25999999999999 473.17999999999995 97.25999999999999Q466.17999999999995 97.25999999999999 461.14 100.05999999999999Q456.09999999999997 102.85999999999999 454.41999999999996 107.33999999999999Q457.0799999999999 107.05999999999999 462.81999999999994 107.05999999999999Q471.63999999999993 107.05999999999999 480.5999999999999 108.45999999999998Q489.55999999999995 109.85999999999999 496.28 112.38Z M495.86000000000007 46.99999999999997H505.6600000000001V74.01999999999998H495.86000000000007Z  M562.5 179.72Q562.5 174.54 565.23 170.33999999999997Q567.96 166.14 572.72 164.04Q567.12 162.07999999999998 557.74 161.66Q558.3000000000001 153.12 562.6400000000001 146.61Q566.98 140.1 574.4000000000001 136.52999999999997Q581.82 132.95999999999998 591.34 132.95999999999998Q605.2 132.95999999999998 613.6 140.66Q622.0 148.36 622.0 161.24V215.0H610.1V162.35999999999999Q610.1 153.26 604.78 147.94Q599.46 142.62 590.36 142.62Q582.94 142.62 577.27 146.05Q571.6 149.48 569.36 155.35999999999999Q574.4 155.92 578.88 157.88Q583.36 159.84 585.74 162.35999999999999V164.88Q580.4200000000001 166.42 577.4100000000001 170.26999999999998Q574.4 174.12 574.4 179.3V215.0H562.5Z M611.08 245.8Q609.4 246.36 607.02 246.36Q601.98 246.36 598.76 243.14000000000001Q595.54 239.92000000000002 595.54 234.88Q595.54 229.84 599.25 226.62Q602.96 223.4 608.42 223.4Q614.58 223.4 618.29 226.69Q622.0 229.98 622.0 234.88V261.2H611.08ZM612.2 234.88Q612.2 232.64 610.8 231.24Q609.4 229.84 607.16 229.84Q604.92 229.84 603.52 231.24Q602.12 232.64 602.12 234.88Q602.12 237.12 603.52 238.52Q604.92 239.92000000000002 607.16 239.92000000000002Q609.4 239.92000000000002 610.8 238.52Q612.2 237.12 612.2 234.88Z M635.3000000000001 82.69999999999999Q634.0400000000001 93.47999999999999 627.53 101.6Q621.02 109.71999999999998 610.52 114.13Q600.02 118.53999999999999 587.14 118.53999999999999H581.82V112.93999999999998Q585.32 111.53999999999999 588.6800000000001 109.01999999999998Q592.0400000000001 106.49999999999999 594.4200000000001 103.41999999999999Q593.72 103.55999999999999 592.32 103.55999999999999Q587.14 103.55999999999999 584.2 100.41Q581.26 97.25999999999999 581.26 92.21999999999998Q581.26 87.32 584.62 84.16999999999999Q587.98 81.01999999999998 593.3000000000001 81.01999999999998Q598.62 81.01999999999998 602.05 84.38Q605.48 87.74 605.48 93.33999999999999Q605.48 97.53999999999999 603.31 102.36999999999999Q601.14 107.19999999999999 597.5 110.27999999999999Q608.5600000000001 108.74 616.0500000000001 100.97Q623.5400000000001 93.19999999999999 624.6600000000001 82.69999999999999ZM593.3000000000001 97.67999999999999Q595.5400000000001 97.67999999999999 597.01 96.21Q598.48 94.74 598.48 92.49999999999999Q598.48 90.25999999999999 597.01 88.78999999999999Q595.5400000000001 87.32 593.3000000000001 87.32Q590.9200000000001 87.32 589.52 88.72Q588.12 90.11999999999999 588.12 92.49999999999999Q588.12 94.74 589.59 96.21Q591.0600000000001 97.67999999999999 593.3000000000001 97.67999999999999Z  M772.2200000000001 134.35999999999999V197.36Q772.2200000000001 206.46 765.4300000000001 211.43Q758.6400000000001 216.4 747.3000000000001 216.4Q735.9600000000002 216.4 729.1700000000001 211.36Q722.3800000000001 206.32 722.3800000000001 197.22V162.35999999999999Q722.3800000000001 153.12 717.4800000000001 147.87Q712.5800000000002 142.62 703.6200000000001 142.62Q696.3400000000001 142.62 691.3000000000002 145.98Q686.2600000000001 149.33999999999997 684.0200000000001 155.35999999999999Q689.0600000000001 155.92 693.5400000000001 157.88Q698.0200000000001 159.84 700.4000000000001 162.35999999999999V164.88Q695.0800000000002 166.42 692.0700000000002 170.26999999999998Q689.0600000000001 174.12 689.0600000000001 179.3V188.96Q691.1600000000001 188.26 693.1200000000001 188.26Q699.4200000000001 188.26 703.3400000000001 192.11Q707.2600000000001 195.96 707.2600000000001 202.26Q707.2600000000001 208.56 703.1300000000001 212.48000000000002Q699.0000000000001 216.4 692.4200000000001 216.4Q685.7000000000002 216.4 681.4300000000001 212.26999999999998Q677.1600000000001 208.14 677.1600000000001 201.56V179.72Q677.1600000000001 174.54 679.8900000000001 170.33999999999997Q682.6200000000001 166.14 687.3800000000001 164.04Q682.0600000000001 162.07999999999998 672.4000000000001 161.66Q673.2400000000001 148.36 681.5700000000002 140.66Q689.9000000000001 132.95999999999998 704.3200000000002 132.95999999999998Q718.4600000000002 132.95999999999998 726.3700000000001 140.51999999999998Q734.2800000000001 148.07999999999998 734.2800000000001 161.24V197.22Q734.2800000000001 201.7 737.9200000000001 204.22Q741.5600000000002 206.74 747.44 206.74Q753.3200000000002 206.74 756.8900000000001 204.22Q760.4600000000002 201.7 760.4600000000002 197.22V134.35999999999999ZM692.9800000000001 195.82Q690.0400000000001 195.82 688.22 197.64Q686.4000000000001 199.46 686.4000000000001 202.26Q686.4000000000001 205.2 688.22 207.01999999999998Q690.0400000000001 208.84 692.9800000000001 208.84Q695.7800000000001 208.84 697.6700000000001 207.01999999999998Q699.5600000000001 205.2 699.5600000000001 202.26Q699.5600000000001 199.46 697.6700000000001 197.64Q695.7800000000001 195.82 692.9800000000001 195.82ZM761.5800000000002 222.42H772.2200000000001Q771.9400000000002 235.86 764.8000000000002 243.70000000000002Q757.6600000000001 251.54000000000002 744.6400000000001 251.54000000000002Q737.6400000000001 251.54000000000002 732.2500000000001 249.23000000000002Q726.8600000000001 246.92000000000002 723.8500000000001 242.93Q720.8400000000001 238.94 720.8400000000001 234.18Q720.8400000000001 228.72 724.2700000000002 225.43Q727.7000000000002 222.14 733.0200000000001 222.14Q738.6200000000001 222.14 742.0500000000002 225.22Q745.4800000000001 228.3 745.4800000000001 233.62Q745.4800000000001 236.7 744.0100000000001 239.22Q742.5400000000001 241.74 739.8800000000001 243.0Q741.9800000000001 243.84 744.7800000000001 243.84Q752.4800000000001 243.84 756.96 238.24Q761.44 232.64 761.5800000000002 222.42ZM733.0200000000001 239.08Q735.5400000000001 239.08 736.94 237.61Q738.3400000000001 236.14 738.3400000000001 233.76Q738.3400000000001 231.38 736.94 229.91Q735.5400000000001 228.44 733.0200000000001 228.44Q730.7800000000001 228.44 729.3800000000001 229.91Q727.9800000000001 231.38 727.9800000000001 233.76Q727.9800000000001 236.14 729.3800000000001 237.61Q730.7800000000001 239.08 733.0200000000001 239.08Z  M891.9200000000001 161.24V259.24H880.44Q877.9200000000001 254.76 872.46 250.49Q867.0 246.22 860.5600000000001 243.42000000000002Q859.02 250.84 854.6800000000001 255.18Q850.34 259.52 842.9200000000001 259.52Q836.2 259.52 831.79 256.15999999999997Q827.38 252.8 827.38 246.64000000000001Q827.38 239.92000000000002 832.35 236.07Q837.32 232.22 846.14 232.22Q849.78 232.22 854.26 233.34Q855.94 227.18 860.5600000000001 223.96L867.5600000000001 227.32Q863.78 230.12 862.1 236.14Q867.28 238.38 872.04 241.39Q876.8000000000001 244.4 880.1600000000001 247.62V162.35999999999999Q880.1600000000001 153.26 874.84 147.94Q869.52 142.62 860.7 142.62Q853.28 142.62 847.8199999999999 145.98Q842.36 149.33999999999997 840.12 155.35999999999999Q845.3000000000001 155.92 849.85 157.88Q854.4 159.84 856.78 162.35999999999999V164.88Q852.1600000000001 166.14 849.6400000000001 169.70999999999998Q847.12 173.28 847.12 177.9Q847.12 180.98 848.38 187.56Q850.0600000000001 196.52 850.0600000000001 201.14Q850.0600000000001 208.0 845.79 212.2Q841.52 216.4 834.6600000000001 216.4Q828.08 216.4 823.95 212.48000000000002Q819.82 208.56 819.82 202.26Q819.82 195.96 823.6700000000001 191.9Q827.52 187.84 833.82 187.84Q835.36 187.84 837.88 188.4Q836.2 182.94 836.2 178.32Q836.2 173.7 838.23 169.77999999999997Q840.26 165.85999999999999 843.76 164.04Q838.58 162.07999999999998 828.5 161.66Q829.0600000000001 153.26 833.19 146.75Q837.32 140.24 844.6 136.6Q851.88 132.95999999999998 861.5400000000001 132.95999999999998Q875.5400000000001 132.95999999999998 883.73 140.51999999999998Q891.9200000000001 148.07999999999998 891.9200000000001 161.24ZM840.82 202.12Q840.82 199.32 838.9300000000001 197.43Q837.0400000000001 195.54 834.24 195.54Q831.44 195.54 829.55 197.43Q827.66 199.32 827.66 202.12Q827.66 204.92 829.55 206.81Q831.44 208.7 834.24 208.7Q837.0400000000001 208.7 838.9300000000001 206.81Q840.82 204.92 840.82 202.12ZM852.72 240.48000000000002Q848.1 239.5 845.58 239.5Q841.52 239.5 838.86 241.18Q836.2 242.86 836.2 246.08Q836.2 249.02 837.8800000000001 250.63Q839.5600000000001 252.24 842.9200000000001 252.24Q846.84 252.24 849.1500000000001 249.09Q851.46 245.94 852.72 240.48000000000002Z" fill="var(--ink)"/>
+</svg></div>
+        <p class="cap">ภาพที่ 2 ตำแหน่งแนวตั้งของอักษรไทย แสดงด้วย ป ที่ กุ้ ญ ฎ ของฟอนต์ Sarabun จัดรูปด้วย HarfBuzz ตำแหน่งเส้นวัดจากเส้นขอบจริงของตัวอักษรในภาพ</p>
+        <p class="prose">ความลึกของบรรทัดไทยมาจากตำแหน่งของเครื่องหมาย คู่มือฟอนต์ภาษาไทยของ Microsoft จัดเครื่องหมายที่ประกอบกับพยัญชนะเป็นกลุ่มตามระดับที่อยู่เหนือหรือใต้พยัญชนะ ดังตารางด้านล่าง และกำหนดให้ตรวจไม่ให้เครื่องหมายกลุ่มเดียวกันซ้อนบนพยัญชนะตัวเดียวกันเกินหนึ่งตัว <span class="cite">(<a href="#r-ms-thai">Microsoft, 2022</a>)</span> กลุ่มอักษรไทยหนึ่งกลุ่มจึงมีเครื่องหมายได้ถึงสี่ระดับเหนือพยัญชนะและสองระดับใต้พยัญชนะ เครื่องหมายตัวเดียวกันก็ไม่ได้อยู่ที่ความสูงเดียวกันเสมอ ในภาพที่ 2 ไม้เอกของ ที่ ยกขึ้นไปอยู่เหนือสระอี ขณะที่ไม้โทของ กุ้ อยู่ชิดเหนือพยัญชนะ ฟอนต์จึงต้องจัดตำแหน่งเหล่านี้ให้ได้กับพยัญชนะทุกตัว</p>
+        <div class="tablewrap">
+          <table>
+            <caption class="cap" style="caption-side:bottom;text-align:left;padding-top:8px">ตารางที่ 1 ระดับของเครื่องหมายประกอบในอักษรไทย จากคู่มือฟอนต์ภาษาไทยของ Microsoft (2022)</caption>
+            <thead><tr><th>กลุ่ม</th><th>ตำแหน่ง</th><th>เครื่องหมาย</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">ABOVE1</td><td>เหนือพยัญชนะ ชิดที่สุด</td><td class="marks">◌ั ◌ิ ◌ี ◌ึ ◌ื</td></tr>
+              <tr><td class="mono">ABOVE2</td><td>ระดับที่สองด้านบน</td><td class="marks">◌็ ◌ํ</td></tr>
+              <tr><td class="mono">ABOVE3</td><td>ระดับที่สามด้านบน</td><td class="marks">◌่ ◌้ ◌๊ ◌๋</td></tr>
+              <tr><td class="mono">ABOVE4</td><td>ระดับที่สี่ด้านบน</td><td class="marks">◌์ ◌๎</td></tr>
+              <tr><td class="mono">BELOW1</td><td>ใต้พยัญชนะ ชิดที่สุด</td><td class="marks">◌ุ ◌ู</td></tr>
+              <tr><td class="mono">BELOW2</td><td>ระดับที่สองด้านล่าง</td><td class="marks">◌ฺ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose">มาตรฐานยูนิโคดจัดอักษรไทยไว้ในช่วงรหัส U+0E00 ถึง U+0E7F วรรณยุกต์และสระหลายตัวเป็นเครื่องหมายประกอบ เครื่องหมายด้านบนซ้อนออกจากพยัญชนะตามลำดับที่พิมพ์ ส่วนสระหน้า เช่น เ แ โ ใ ไ ถูกพิมพ์และเก็บไว้ก่อนพยัญชนะ ตามแนวปฏิบัติของมาตรฐานผลิตภัณฑ์อุตสาหกรรมไทย <span class="cite">(<a href="#r-unicode">Unicode Consortium, 2023, §16.1</a>)</span></p>
+      </article>
+
+      <article class="lesson" id="l6">
+        <span class="k">บทที่ 6</span>
+        <h3>อักษรไทยในแฟ้มฟอนต์</h3>
+        <p class="prose">ฟอนต์ OpenType จัดตำแหน่งเครื่องหมายด้วยตาราง GPOS (Glyph Positioning) การยึดเครื่องหมายกับฐาน (mark-to-base) จับจุดยึดบนเครื่องหมายให้ตรงกับจุดยึดบนพยัญชนะ และข้อกำหนดของ OpenType ระบุอักษรไทยเป็นหนึ่งในระบบตัวเขียนที่ทำงานด้วยวิธีนี้ <span class="cite">(<a href="#r-ms-gpos">Microsoft, n.d.</a>)</span> คู่มือฟอนต์ภาษาไทยของ Microsoft อธิบายว่าเครื่องจัดรูปอักษร (shaping engine) ประมวลผลข้อความไทยเป็นสามขั้น คือวิเคราะห์ว่าการประกอบเครื่องหมายถูกต้องหรือไม่ แทนที่รูปอักษร แล้วจึงจัดตำแหน่ง และระบุคุณลักษณะ (feature) ของ OpenType สำหรับฟอนต์ไทยไว้สี่ตัวตามลำดับที่ใช้งาน <span class="cite">(<a href="#r-ms-thai">Microsoft, 2022</a>)</span></p>
+        <div class="tablewrap">
+          <table>
+            <caption class="cap" style="caption-side:bottom;text-align:left;padding-top:8px">ตารางที่ 2 คุณลักษณะ OpenType สำหรับฟอนต์ภาษาไทย จากคู่มือของ Microsoft (2022)</caption>
+            <thead><tr><th>คุณลักษณะ</th><th>หน้าที่</th><th>ตาราง</th><th>จำเป็น</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">ccmp</td><td>ประกอบและแยกอักขระ</td><td class="mono">GSUB</td><td>ไม่</td></tr>
+              <tr><td class="mono">kern</td><td>ระยะชิดเฉพาะคู่</td><td class="mono">GPOS</td><td>ไม่</td></tr>
+              <tr><td class="mono">mark</td><td>จัดตำแหน่งเครื่องหมายบนฐาน</td><td class="mono">GPOS</td><td>จำเป็น</td></tr>
+              <tr><td class="mono">mkmk</td><td>จัดตำแหน่งเครื่องหมายบนเครื่องหมาย</td><td class="mono">GPOS</td><td>จำเป็น</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose">งานเฉพาะของอักษรไทยอยู่ใน ccmp เป็นส่วนใหญ่ คุณลักษณะนี้ใช้แยกสระอำเป็นสองส่วนเพื่อให้วางวรรณยุกต์ได้ถูกที่ และใช้ตัดเชิงล่างของ ญ ออกเมื่อตามด้วยสระล่าง เช่น สระอุหรือสระอู คู่มือฉบับเดียวกันกำหนดด้วยว่าเมื่อการประกอบไม่ถูกต้อง เครื่องหมายตัวที่ทำให้ผิดจะแสดงบนวงกลมประ เพื่อบอกผู้ใช้ว่าพิมพ์ผิดลำดับ ฟอนต์ไทยจึงควรมีรูปวงกลมประ (U+25CC) มิฉะนั้นเครื่องหมายนั้นจะไปแสดงบนกล่องสี่เหลี่ยมว่าง <span class="cite">(<a href="#r-ms-thai">Microsoft, 2022</a>)</span></p>
+        <p class="prose">นักศึกษาที่กำลังวาดตัวอักษรมองไม่เห็นสิ่งเหล่านี้เลย แต่ทั้งหมดเป็นตัวตัดสินว่าฟอนต์ใช้งานได้หรือไม่ นักศึกษาอาจวาด ป สวยและวางวรรณยุกต์ได้ดี แต่ฟอนต์ยังพังได้ถ้าวรรณยุกต์ชนหางสูงของ ป ในคำที่ไม่ได้นึกถึงตอนทดสอบ กฎการเขียนภาษาไทยเป็นสิ่งตายตัว โปรแกรมจึงตรวจได้ครบถ้วน ส่วนฝีมือในการวาดตัวอักษรเป็นอิสระ โปรแกรมจึงต้องเปิดให้ผู้ออกแบบเป็นผู้ตัดสินใจสุดท้าย</p>
+      </article>
+
+      <article class="lesson" id="l7">
+        <span class="k">บทที่ 7</span>
+        <h3>ฟอนต์แห่งชาติและ TH Sarabun New</h3>
+        <p class="prose">รัฐบาลไทยประกาศให้ฟอนต์แห่งชาติเป็นสมบัติสาธารณะใน ค.ศ. 2010 และกำหนดให้หน่วยงานรัฐใช้ TH Sarabun PSK ซึ่งกลายเป็นฟอนต์มาตรฐานของหนังสือราชการตั้งแต่ ค.ศ. 2011 <span class="cite">(<a href="#r-suveeranont">Suveeranont, 2025</a>)</span> ฟอนต์ TH Sarabun New ที่มากับลายสือระบุในหนังสือแจ้งสัญญาอนุญาตว่าเป็นลิขสิทธิ์ของสำนักงานส่งเสริมอุตสาหกรรมซอฟต์แวร์แห่งชาติ (SIPA) ปี 2010–2011 ออกแบบโดยศุภกิจ เฉลิมลาภ และเผยแพร่เป็นซอฟต์แวร์เสรีภายใต้สัญญาอนุญาต GNU General Public License รุ่น 2 หรือใหม่กว่า พร้อมข้อยกเว้นสำหรับเอกสาร <span class="cite">(<a href="#r-sipa">Software Industry Promotion Agency, 2010–2011</a>)</span> นักศึกษาไทยอ่านฟอนต์นี้ในเอกสารราชการทุกวัน ลายสือจึงใช้เป็นตัวต้นแบบสีเทาที่อยู่หลังตัวอักษรแต่ละตัว และเป็นฟอนต์เดียวของหน้าจอโปรแกรม</p>
+      </article>
+
+      <section class="lesson" id="refs" aria-labelledby="h-refs">
+        <h3 id="h-refs">เอกสารอ้างอิง</h3>
+        <ul class="refs">
+          <li id="r-cadson">Cadson Demak. (2025, August 6). <i>Very well selected: Cadson Demak and the modern Thai typeface</i>. GRANSHAN. <a href="https://granshan.com/insights/very-well-selected-cadson-demak-and-the-modern-thai-typeface">https://granshan.com/insights/very-well-selected-cadson-demak-and-the-modern-thai-typeface</a></li>
+          <li id="r-gf-asc">Google Fonts. (n.d.-a). <i>Ascenders &amp; descenders</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/ascenders_descenders">https://fonts.google.com/knowledge/glossary/ascenders_descenders</a></li>
+          <li id="r-gf-baseline">Google Fonts. (n.d.-b). <i>Baseline</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/baseline">https://fonts.google.com/knowledge/glossary/baseline</a></li>
+          <li id="r-gf-cap">Google Fonts. (n.d.-c). <i>Cap height</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/cap_height">https://fonts.google.com/knowledge/glossary/cap_height</a></li>
+          <li id="r-gf-counter">Google Fonts. (n.d.-d). <i>Counter</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/counter">https://fonts.google.com/knowledge/glossary/counter</a></li>
+          <li id="r-gf-over">Google Fonts. (n.d.-e). <i>Overshoot</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/overshoot">https://fonts.google.com/knowledge/glossary/overshoot</a></li>
+          <li id="r-gf-spacing">Google Fonts. (n.d.-f). <i>Spacing</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/spacing">https://fonts.google.com/knowledge/glossary/spacing</a></li>
+          <li id="r-gf-xh">Google Fonts. (n.d.-h). <i>x-height</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/x_height">https://fonts.google.com/knowledge/glossary/x_height</a></li>
+          <li id="r-ms-gpos">Microsoft. (n.d.). <i>GPOS — The glyph positioning table</i> (OpenType specification 1.9.1). <a href="https://learn.microsoft.com/en-us/typography/opentype/spec/gpos">https://learn.microsoft.com/en-us/typography/opentype/spec/gpos</a></li>
+          <li id="r-ms-thai">Microsoft. (2022). <i>Developing OpenType fonts for Thai script</i>. <a href="https://learn.microsoft.com/en-us/typography/script-development/thai">https://learn.microsoft.com/en-us/typography/script-development/thai</a></li>
+          <li id="r-mitchell">Mitchell, B. (2014, September 11). <i>On loops and Latinisation</i>. Fontpad. <a href="https://www.fontpad.co.uk/?p=666">https://www.fontpad.co.uk/?p=666</a></li>
+          <li id="r-noordzij">Noordzij, G. (2005). <i>The stroke: Theory of writing</i> (P. Enneson, Trans.). Hyphen Press. (Original work published 1985) <a href="https://www.hyphenpress.co.uk/products/books/978-0-907259-30-5">https://www.hyphenpress.co.uk/products/books/978-0-907259-30-5</a></li>
+          <li id="r-punsongserm">Punsongserm, R., Sunaga, S., &amp; Ihara, H. (2017). Thai typefaces (Part 1): Assumption on visibility and legibility problems. <i>Archives of Design Research, 30</i>(1), 5–23. <a href="https://doi.org/10.15187/adr.2017.02.30.1.5">https://doi.org/10.15187/adr.2017.02.30.1.5</a></li>
+          <li id="r-sipa">Software Industry Promotion Agency. (2010–2011). <i>TH Sarabun New</i> [Font; licence notice distributed with the font]. Designed by Suppakit Chalermlarp.</li>
+          <li id="r-suveeranont">Suveeranont, P. (2025). <i>History of Thai typography</i>. Typotheque. <a href="https://www.typotheque.com/articles/history-of-thai-typography">https://www.typotheque.com/articles/history-of-thai-typography</a></li>
+          <li id="r-unicode">Unicode Consortium. (2023). Chapter 16: Southeast Asia. In <i>The Unicode Standard, version 15.1.0</i>. <a href="https://www.unicode.org/versions/Unicode15.1.0/ch16.pdf">https://www.unicode.org/versions/Unicode15.1.0/ch16.pdf</a></li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="win" id="research" aria-labelledby="h-res">
+    <div class="tb"><span>ร่วมเป็นผู้เข้าร่วมการวิจัย</span></div>
+    <div class="wb" id="research-body">
+      <h2 id="h-res">ประกาศรับสมัครผู้เข้าร่วมการวิจัย</h2>
+      <div id="research-state-th"></div>
+      <p class="prose muted" style="font-size:16px">เว็บไซต์นี้ไม่เก็บข้อมูลการวิจัยและไม่เก็บข้อมูลส่วนบุคคลของผู้เข้าชม</p>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section class="win" id="impact" aria-labelledby="h-imp">
+    <div class="tb"><span>ผลการนำไปใช้</span></div>
+    <div class="wb">
+      <h2 id="h-imp">ลายสือในห้องเรียนและนอกห้องเรียน</h2>
+      <div class="panes">
+        <div class="pane">
+          <span class="label">จำนวนการดาวน์โหลด</span>
+          <div id="stat-downloads-th"></div>
+        </div>
+        <div class="pane">
+          <span class="label">สถาบันที่นำไปใช้</span>
+          <div id="institutions-th"></div>
+        </div>
+      </div>
+      <h3>ฟอนต์จากผู้ใช้ลายสือ</h3>
+      <div id="gallery-th"></div>
+      <p class="muted" style="font-size:16px">ฟอนต์ทุกชิ้นในหน้านี้แสดงโดยได้รับความยินยอมจากผู้ออกแบบซึ่งเป็นเจ้าของฟอนต์ สถาบันที่นำลายสือไปใช้ในการเรียนการสอน แจ้งชื่อสถาบันและรายวิชาได้ทางอีเมลของผู้พัฒนา</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="win" id="about" aria-labelledby="h-about">
+    <div class="tb"><span>ผู้พัฒนา</span></div>
+    <div class="wb">
+      <h2 id="h-about">ผู้พัฒนา</h2>
+      <p class="prose"><b>ผู้ช่วยศาสตราจารย์ ดร.กิตติธัช ศรีฟ้า</b><br>สาขาวิชาการออกแบบสื่อดิจิทัล คณะสถาปัตยกรรมศาสตร์และการออกแบบ มหาวิทยาลัยเทคโนโลยีราชมงคลรัตนโกสินทร์</p>
+      <p class="prose">ผู้พัฒนาเป็นผู้กำหนดเป้าหมาย ออกแบบหน้าตา และตัดสินใจในทุกขั้นของการพัฒนา โดยใช้ Claude ของ Anthropic เป็นเครื่องมือเขียนโค้ด ลิขสิทธิ์โปรแกรมเป็นของผู้พัฒนา</p>
+      <div class="btns">
+        <span class="copybox"><span id="mail-th">kittithat.sri@rmutr.ac.th</span><button type="button" data-copy="mail-th">คัดลอกอีเมล</button></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+<main id="en-top" data-l="en" lang="en">
+<div class="stack">
+
+  <section class="win hero" aria-labelledby="en-h-hero">
+    <div class="tb"><span>ลายสือ · LAISUE</span></div>
+    <div class="wb">
+      <div class="copy">
+        <h1 id="en-h-hero">ลายสือ<small>LAISUE</small></h1>
+        <p class="lead">A font program for macOS that turns handwriting into Thai fonts. Free for Thai school and university students.</p>
+        <p class="prose">Write the letters by hand on a six-page A4 form, photograph or scan the pages, and LAISUE reads them as letters. It builds the rules that place Thai vowels and tone marks automatically, checks how Thai text sets before export, and exports OpenType fonts that work in graphic and office software. The same form covers the Latin alphabet, so one font can set both Thai and English.</p>
+        <div class="btns">
+          <a class="btn primary" href="#en-download">Download LAISUE 2.8</a>
+          <a class="btn" href="#en-install">How to install</a>
+        </div>
+        <div class="meta"><span>Version 2.8</span><span>November 2026</span><span>macOS 12 or later</span><span>Apple chip and Intel</span></div>
+      </div>
+      <img class="icon" src="assets/laisue-icon.png" alt="The LAISUE icon: a black-and-white pixel drawing of a sheet with a folded corner and the Thai letter ล" width="192" height="192">
+      <div class="specimen" aria-label="Thai words in which a font must place vowels and tone marks correctly">
+        <b lang="th">น้ำ ที่ ปู่ ฎุ ญุ</b>
+        <p>Short words like these are where a beginner's Thai font usually breaks. LAISUE handles them from the first font.</p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="win shot">
+    <div class="tb"><span>LAISUE 2.8</span></div>
+    <img src="assets/laisue-2-8.png" alt="The LAISUE 2.8 window in black and white: a tool box on the left, the drawing window with the letter ก in the centre, and the properties panel and glyph grid on the right" width="1400" height="860" loading="lazy">
+    <figcaption>LAISUE 2.8. The tools and keyboard shortcuts follow Adobe Illustrator; the black-and-white look comes from the first Macintosh computers.</figcaption>
+  </figure>
+
+  <div class="row">
+    <section class="win" aria-labelledby="en-h-why">
+      <div class="tb"><span>About the project</span></div>
+      <div class="wb">
+        <h2 id="en-h-why">Why it is free</h2>
+        <p class="prose">Most design students can use font software only in their university's computer labs, because commercial font editors are expensive, so the work stops when they go home. The editors on the market were also not made for Thai. The rules for placing vowels and tone marks that every Thai font needs are left for the designer to build, and a beginner's font can look right on paper yet break as soon as a tone mark is typed.</p>
+        <p class="prose">LAISUE was made as creative research in service of society, under the project <b>Creating LAISUE: Making Thai Typeface Design Easy and Widespread to Sustain the Thai Script in the Digital Age</b> <span class="muted" lang="th">(การสร้างสรรค์โปรแกรมลายสือ เพื่อให้การออกแบบชุดตัวอักษรไทยเป็นเรื่องง่ายและแพร่หลาย สู่การสืบสานอักษรไทยในยุคดิจิทัล)</span>.</p>
+        <p class="prose">Fonts made with LAISUE belong to the people who design them, and the designer's name is written into every font file.</p>
+      </div>
+    </section>
+
+    <section class="win" aria-labelledby="en-h-thai">
+      <div class="tb"><span>What LAISUE does</span></div>
+      <div class="wb">
+        <h2 id="en-h-thai">The Thai work you don't see</h2>
+        <ul class="ticks">
+          <li>Finds where each vowel and tone mark attaches to each consonant from the letters as drawn, with separate positions on ป ฝ ฟ ฬ so marks clear the tall stem.</li>
+          <li>Lowers vowels under ฎ ฏ, uses the short forms of ญ and ฐ before a lower vowel, lifts tone marks above upper vowels, and splits sara am inside the font itself.</li>
+          <li>Before export, checks every Thai combination against real Thai words and moves a letter aside only where marks would touch.</li>
+          <li>Sets spacing, kerning and line height so nothing is cut off in office programs.</li>
+          <li>Makes font families of up to six styles, light, bold and italic, while keeping the heads and counters of Thai letters open.</li>
+          <li>Exports TTF, OTF and WOFF2. The interface is in Thai and English.</li>
+        </ul>
+        <p class="muted" style="font-size:16px">Every automatic step can be changed by the designer. The program may warn, but the designer decides.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="win" aria-labelledby="en-h-flow">
+    <div class="tb"><span>From paper to font</span></div>
+    <div class="wb">
+      <h2 id="en-h-flow">Four steps from handwriting to a font</h2>
+      <ol class="steps">
+        <li><span class="n">Step 1</span><h3>Print the form</h3><p>Six A4 pages, one box per character, 188 in all. Print at 100%.</p></li>
+        <li><span class="n">Step 2</span><h3>Write by hand</h3><p>Use a dark pen and set each letter on the baseline, or write on an iPad in black.</p></li>
+        <li><span class="n">Step 3</span><h3>Photograph or scan</h3><p>Lay the page flat and shoot from straight above with all four black corners in view, or scan at 300 dpi.</p></li>
+        <li><span class="n">Step 4</span><h3>Read, check, export</h3><p>The letters become editable curves; the Thai check runs; the font is exported.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="win" id="en-download" aria-labelledby="en-h-dl">
+    <div class="tb"><span>Download</span></div>
+    <div class="wb">
+      <h2 id="en-h-dl">Download LAISUE 2.8</h2>
+      <p class="prose">Choose the file for your Mac's chip, shown under Apple menu › About This Mac, next to Chip or Processor. Macs with an M1, M2, M3, M4 or later chip use the Apple Silicon file; Macs with an Intel chip use the Intel file. macOS 12 or later is required.</p>
+      <div class="files" id="files-en"></div>
+      <div class="alert">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="22" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><path d="M9 14l5 5 9-10" fill="none" stroke="var(--ink)" stroke-width="3"/></svg>
+        <p>The program sends no user data or project files to any server. All work stays on your computer. The link to Claude runs only when you switch it on yourself.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="row" id="en-install">
+    <section class="win" aria-labelledby="en-h-inst">
+      <div class="tb"><span>Installing</span></div>
+      <div class="wb">
+        <h2 id="en-h-inst">Install the program</h2>
+        <ol class="num">
+          <li>Double-click the .dmg file you downloaded and drag LAISUE onto the Applications folder.</li>
+          <li>Open LAISUE from the Applications folder.</li>
+        </ol>
+        <hr>
+        <h3>The first launch</h3>
+        <p class="prose">This version is not yet signed with an Apple Developer ID, so macOS asks you to confirm it once. After that it opens normally.</p>
+        <ol class="num">
+          <li>If macOS says LAISUE cannot be opened, click Done.</li>
+          <li>Go to System Settings › Privacy &amp; Security.</li>
+          <li>Scroll down to the message about LAISUE, click Open Anyway, and confirm.</li>
+        </ol>
+        <p class="prose">If macOS says the app “is damaged”, open the Terminal app, type the command below, press Return, then open LAISUE again.</p>
+        <div class="cmd"><code id="cmd-xattr-en">xattr -dr com.apple.quarantine /Applications/LAISUE.app</code><button type="button" data-copy="cmd-xattr-en">Copy</button></div>
+        <p class="muted" style="font-size:16px">TH Sarabun New, used for the program's own text, is included. Nothing else needs to be installed.</p>
+      </div>
+    </section>
+
+    <section class="win" aria-labelledby="en-h-un">
+      <div class="tb"><span>Uninstalling</span></div>
+      <div class="wb">
+        <h2 id="en-h-un">Remove the program</h2>
+        <ol class="num">
+          <li>Save your work and quit LAISUE with <kbd>⌘Q</kbd>.</li>
+          <li>In Finder, open Applications, drag LAISUE to the Trash and empty the Trash.</li>
+          <li>To remove what the program left behind as well, choose Go › Go to Folder… (<kbd>⇧⌘G</kbd>) in Finder and delete the hidden folder <span class="path">~/.laisue</span>, which holds the automatic backups of your work, and the file <span class="path">~/Library/Logs/LAISUE.log</span>.</li>
+        </ol>
+        <div class="note">Removing the program does not delete your saved project files (.ls) or fonts you have installed. Remove installed fonts in Font Book. TH Sarabun New is never installed on the system, so it needs no separate removal.</div>
+      </div>
+    </section>
+  </div>
+
+  <section class="win" id="en-form" aria-labelledby="en-h-form">
+    <div class="tb"><span>A4 form</span></div>
+    <div class="wb">
+      <h2 id="en-h-form">The handwriting form</h2>
+      <p class="prose">The form has six pages and one box for each of 188 characters: the 87 assigned characters of the Unicode Thai block, including the Thai digits; the 94 printable ASCII characters; and seven typographic punctuation marks (curly quotes, en and em dashes, and the ellipsis). Each box carries its character and code, with blue guide lines for the descender, the baseline, the x-height, the capital height and the top of the tone marks. Boxes for vowels and tone marks show a pale grey ก, so each mark is written exactly where it sits on a consonant. Sara am is written after the grey ก, as in ordinary Thai writing.</p>
+      <div class="files" id="form-files-en"></div>
+      <div class="row" style="gap:28px">
+        <div class="pane">
+          <h3>Writing</h3>
+          <ul class="ticks" style="font-size:16px">
+            <li>Set the base of each letter on the dark blue line, with consonants reaching the consonant-height line.</li>
+            <li>Use a dark pen or ink: black, dark blue, or a soft dark pencil.</li>
+            <li>Do not write over the black squares in the corners; the program uses them to find the page.</li>
+            <li>On an iPad, open the PDF in an app that can write on PDFs, use a black or dark pen, and save it as a PDF.</li>
+          </ul>
+        </div>
+        <div class="pane">
+          <h3>Photographing</h3>
+          <ul class="ticks" style="font-size:16px">
+            <li>Lay the form flat and shoot from straight above, with the whole sheet and all four black corners in view.</li>
+            <li>Use even light, watch for the shadow of your hand or phone, and tap to focus before shooting.</li>
+            <li>Keep fingers, pens, erasers and everything else off the sheet. Photograph one sheet at a time.</li>
+            <li>If you have a scanner, a 300 dpi scan gives the best result.</li>
+          </ul>
+        </div>
+      </div>
+      <h3>Limits of the reader in this version</h3>
+      <ul class="ticks" style="font-size:16px">
+        <li>Reading depends on the photo. Very blurred or dark photos, or a dark shadow across the letters, may give missing letters or shapes different from what was written.</li>
+        <li>When something lies on the form, the program names the letters it covers and does not read them. A small dark object inside a single box, such as a pen cap, may be read as part of the letter, with only a “touches the box edge” warning.</li>
+        <li>Bright blue ink, such as a blue iPad pen, is close to the colour of the guide lines and is removed with them. Write in a dark colour instead.</li>
+        <li>Very light pencil, very small dots and photos whose ink has faded almost to the colour of the paper may not be read. Try the ink sensitivity setting, or draw the letter in the program.</li>
+      </ul>
+      <p class="muted" style="font-size:16px">Any letter that was not read, or was read wrongly, can be drawn or fixed in the program with the Brush or the Pen. For students who draw in vector software, LAISUE also provides a digital template in .ai and .svg with the same boxes and guide lines.</p>
+    </div>
+  </section>
+
+  <section class="win" id="en-lessons" aria-labelledby="en-h-les">
+    <div class="tb"><span>Type design lessons</span></div>
+    <div class="wb">
+      <h2 id="en-h-les">Lessons in Thai and Latin type design</h2>
+      <p class="prose">These lessons are drawn from Chapter 2 of the LAISUE research report. Every fact is cited, and the full references with links are at the end. The diagrams in Lessons 2 and 5 are drawn from the actual outlines of the Sarabun font, using values measured from the font file.</p>
+      <nav class="toc" aria-label="Lessons">
+        <a href="#en-l1">1 Letters come from the stroke</a>
+        <a href="#en-l2">2 The structure of Latin letters</a>
+        <a href="#en-l3">3 Heads, knots and Thai structure</a>
+        <a href="#en-l4">4 Thai script and printing technology</a>
+        <a href="#en-l5">5 Positions of vowels and tone marks</a>
+        <a href="#en-l6">6 Thai inside a font file</a>
+        <a href="#en-l7">7 The National Fonts and TH Sarabun New</a>
+        <a href="#en-refs">References</a>
+      </nav>
+
+      <article class="lesson" id="en-l1">
+        <span class="k">Lesson 1</span>
+        <h3>Letters come from the stroke</h3>
+        <p class="prose">The Dutch typographer Gerrit Noordzij set out a theory of writing in <i>The Stroke: Theory of Writing</i>. He argued that all letterforms develop from the stroke, the trace a writing instrument leaves as it moves across a surface, and that printing type too has its roots in writing. He explained the contrast between thick and thin parts of letters through two models of the stroke: translation, in which a broad nib of fixed width moves along the path, and expansion, in which pressure widens the stroke. The book first appeared in Dutch as <i>De streek</i> in 1985; the English edition was translated by Peter Enneson <span class="cite">(<a href="#en-r-noordzij">Noordzij, 1985/2005</a>)</span>.</p>
+        <p class="prose">If letters come from the stroke, a student who writes letters by hand on paper is already doing the essential work of type design, and the job of a digital tool is to keep that stroke rather than replace it. This is why LAISUE starts from handwriting on a form, traces each letter as smooth curves that keep its shape, and offers a brush with a flat, angled tip as well as a round one, so students can draw contrast the way a broad pen does.</p>
+      </article>
+
+      <article class="lesson" id="en-l2">
+        <span class="k">Lesson 2</span>
+        <h3>The vertical structure of Latin letters</h3>
+        <p class="prose">Type designers describe letters by their parts and by the horizontal lines those parts sit on. These terms are the basis of the LAISUE form, its drawing window and its checks.</p>
+        <div class="figwrap"><svg viewBox="0 0 911 300" role="img" aria-label="โครงสร้างแนวตั้งของอักษรละติน" class="fig">
+<line x1="0" x2="911" y1="66.8" y2="66.8" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="60.8" class="fl">ส่วนขึ้น <tspan class="fe">ascender · 742</tspan></text>
+<line x1="0" x2="911" y1="76.0" y2="76.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="93.0" class="fl">ความสูงตัวพิมพ์ใหญ่ <tspan class="fe">cap height · 700</tspan></text>
+<line x1="0" x2="911" y1="120.0" y2="120.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="114.0" class="fl">ความสูงตัว x <tspan class="fe">x-height · 500</tspan></text>
+<line x1="0" x2="911" y1="230.0" y2="230.0" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="none"/>
+<text x="4" y="224.0" class="fl">เส้นฐาน <tspan class="fe">baseline · 0</tspan></text>
+<line x1="0" x2="911" y1="283.2" y2="283.2" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="277.2" class="fl">ส่วนลง <tspan class="fe">descender · -242</tspan></text>
+<path d="M307.6 76.0H327.84000000000003V143.76H401.32V76.0H421.56V230.0H401.32V160.48000000000002H327.84000000000003V230.0H307.6Z M480.08 174.12 444.43999999999994 120.0H465.34L489.76 160.92000000000002L514.18 120.0H535.0799999999999L499.43999999999994 174.12L537.9399999999999 230.0H516.8199999999999L489.76 186.0L462.7 230.0H441.58Z M541.24 173.02Q541.24 156.3 546.96 143.87Q552.68 131.44 563.24 124.62Q573.8 117.8 587.88 117.8Q608.12 117.8 620.44 134.74H620.88V66.75999999999999H639.36V202.28Q639.36 222.74 640.02 230.0H622.86Q622.42 224.72 622.42 212.62H621.98Q616.92 221.42 607.46 226.81Q598.0 232.2 587.4399999999999 232.2Q566.1 232.2 553.6700000000001 216.36Q541.24 200.52 541.24 173.02ZM620.66 186.0V165.98000000000002Q620.66 150.57999999999998 612.3 141.33999999999997Q603.94 132.1 590.08 132.1Q576.0 132.1 567.97 142.99Q559.9399999999999 153.88 559.9399999999999 173.46Q559.9399999999999 193.92000000000002 567.97 205.58Q576.0 217.24 590.08 217.24Q604.16 217.24 612.41 208.77Q620.66 200.3 620.66 186.0Z M666.86 147.72Q666.86 133.64 665.98 120.0H683.14Q683.8 128.14 683.8 137.38H684.24Q688.86 128.57999999999998 698.54 123.19Q708.22 117.8 719.44 117.8Q740.78 117.8 752.88 132.98Q764.98 148.16 764.98 175.0Q764.98 192.38 759.26 205.25Q753.54 218.12 743.0899999999999 225.16Q732.64 232.2 718.78 232.2Q707.34 232.2 698.76 227.8Q690.18 223.4 686.22 215.48H685.56V283.24H666.86ZM746.28 174.34Q746.28 154.32 738.36 143.54Q730.44 132.76 716.14 132.76Q702.72 132.76 694.14 141.56Q685.56 150.36 685.56 164.0V184.02Q685.56 199.2 693.92 208.55Q702.28 217.9 715.92 217.9Q730.0 217.9 738.14 206.13Q746.28 194.36 746.28 174.34Z M780.8199999999999 175.0Q780.8199999999999 157.62 787.31 144.64Q793.8 131.66 805.79 124.72999999999999Q817.78 117.8 834.06 117.8Q858.6999999999999 117.8 873.1099999999999 133.2Q887.52 148.6 887.52 175.0Q887.52 201.4 873.1099999999999 216.8Q858.6999999999999 232.2 834.06 232.2Q817.78 232.2 805.79 225.26999999999998Q793.8 218.34 787.31 205.36Q780.8199999999999 192.38 780.8199999999999 175.0ZM868.8199999999999 175.0Q868.8199999999999 154.98000000000002 859.5799999999999 143.54000000000002Q850.3399999999999 132.1 834.06 132.1Q818.0 132.1 808.76 143.54000000000002Q799.52 154.98000000000002 799.52 175.0Q799.52 195.02 808.76 206.46Q818.0 217.9 834.06 217.9Q850.3399999999999 217.9 859.5799999999999 206.46Q868.8199999999999 195.02 868.8199999999999 175.0Z" fill="var(--ink)"/>
+</svg></div>
+        <p class="cap">Figure 1. Horizontal lines of Latin letters, shown with H x d p o in Sarabun. The number after each line is its value in font units (1,000 units to the em), measured from the font file.</p>
+        <dl class="terms">
+          <dt>Baseline</dt><dd>The invisible line on which a line of type rests, used as the point from which other measurements, such as line height and x-height, are taken <span class="cite">(<a href="#en-r-gf-baseline">Google Fonts, n.d.-b</a>)</span>.</dd>
+          <dt>x-height</dt><dd>The height of lowercase letters that have no ascenders or descenders; it shows how large or small a type appears <span class="cite">(<a href="#en-r-gf-xh">Google Fonts, n.d.-h</a>)</span>.</dd>
+          <dt>Cap height</dt><dd>The height of capital letters from the baseline to the top of the glyph, usually a little lower than the ascenders <span class="cite">(<a href="#en-r-gf-cap">Google Fonts, n.d.-c</a>)</span>. In Figure 1, H is 700 units tall and the top of d reaches 742.</dd>
+          <dt>Ascender, descender</dt><dd>The parts of letters that rise above the x-height or drop below the baseline, as in the stem of d and the tail of p <span class="cite">(<a href="#en-r-gf-asc">Google Fonts, n.d.-a</a>)</span>.</dd>
+          <dt>Counter</dt><dd>The space enclosed inside a letter, closed as in o and d or open on one side as in c and u <span class="cite">(<a href="#en-r-gf-counter">Google Fonts, n.d.-d</a>)</span>.</dd>
+          <dt>Overshoot</dt><dd>The part of a letter that extends beyond the vertical limits of flatter letters <span class="cite">(<a href="#en-r-gf-over">Google Fonts, n.d.-e</a>)</span>. Round letters must pass the line slightly to look as tall as flat ones. In Figure 1, the o of Sarabun goes 10 units below the baseline and 10 units above the x-height.</dd>
+          <dt>Spacing</dt><dd>Setting the horizontal space around each glyph <span class="cite">(<a href="#en-r-gf-spacing">Google Fonts, n.d.-f</a>)</span>, which decides whether a line of text reads as an even texture.</dd>
+        </dl>
+        <p class="prose">Each of these terms is a working decision in LAISUE. The form prints the baseline, x-height, cap height and descender as guide lines; the reader keeps overshoot instead of cutting letters flat at the line; and the program sets the space beside each letter from the letter's own shape, which the designer can then change.</p>
+      </article>
+
+      <article class="lesson" id="en-l3">
+        <span class="k">Lesson 3</span>
+        <h3>Heads, knots and the structure of Thai letters</h3>
+        <p class="prose">The most visible feature of Thai letters is the loop. Ben Mitchell distinguishes two kinds: the head (<span lang="th">หัว</span>), which is the beginning of a letter as it is handwritten, and the knot (<span lang="th">ขมวด</span>), an integral part of a letter's shape formed where strokes cross. Unlike Latin serifs, he notes, heads carry meaning, because similar letters are told apart by the orientation of their loops. He also observes that Thai is traditionally rather narrow and keeps the active parts of its letters towards the top <span class="cite">(<a href="#en-r-mitchell">Mitchell, 2014</a>)</span>. For a student, this means a small slip in drawing a head can turn one letter into another.</p>
+        <p class="prose">The Thai foundry Cadson Demak describes looped and loopless as structural classes unique to the Thai script, not Thai versions of Latin serif and sans serif, and calls the script architectural rather than merely linear, because vowels and tone marks sit above, below and around the consonants <span class="cite">(<a href="#en-r-cadson">Cadson Demak, 2025</a>)</span>. LAISUE takes no side between looped and loopless forms; it reads whatever the student writes. What it does take from this view is that the vertical structure of a Thai line is part of the design, and has to be handled by the font rather than left to chance.</p>
+        <p class="prose">Research on the visibility and legibility of Thai type points the same way. Rachapoom Punsongserm and colleagues tested Thai typefaces under blur and found that rounded loops kept the space inside letters easier to see than other loop shapes, and that strokes of even weight were more visible than strongly contrasting thick and thin strokes <span class="cite">(<a href="#en-r-punsongserm">Punsongserm et al., 2017</a>)</span>. The lesson for a teaching tool is plain: the heads, counters and tails a student draws must survive digitising and any automatic change of weight. LAISUE therefore keeps heads and counters open when it makes letters bolder.</p>
+      </article>
+
+      <article class="lesson" id="en-l4">
+        <span class="k">Lesson 4</span>
+        <h3>Thai script and printing technology</h3>
+        <p class="prose">Pracha Suveeranont's history of Thai type begins with the printing press brought to Siam by the American missionary Dan Beach Bradley in 1835. Thai metal type needed more than 210 characters, against about 70 for Latin, because printers cast full and half versions of consonants to carry the stacked marks <span class="cite">(<a href="#en-r-suveeranont">Suveeranont, 2025</a>)</span>.</p>
+        <p class="prose">Two episodes in that history bear directly on font design. The first is what Suveeranont calls head blockage: in letterpress printing, spreading ink could fill the small heads of Thai letters, so printers shortened them. The same danger returns in digital form whenever software makes letters bolder. The second is the long dispute over loops. In 1974 a government committee likened loops to serifs, called loopless styles “Latinised”, and limited them to commercial headlines. In 2013 a beta of Apple's iOS 7 set Thai text in Cadson Demak's loopless Sukhumvit; users objected strongly, and version 7.0.1 returned to Thonburi <span class="cite">(<a href="#en-r-suveeranont">Suveeranont, 2025</a>)</span>. The episode shows how strongly Thai readers respond to the letters they read every day, and why a tool for students should support both looped and loopless styles without favouring either.</p>
+      </article>
+
+      <article class="lesson" id="en-l5">
+        <span class="k">Lesson 5</span>
+        <h3>Positions of vowels and tone marks</h3>
+        <p class="prose">Most Thai consonants sit between the baseline and a single consonant height, but not all. In Figure 2, ป rises above the consonant height, while ญ and ฎ reach below the baseline. Terms for the parts of Thai letters, such as the head, the tail, and the vertical and horizontal strokes, give designers a shared language for analysing them.</p>
+        <div class="figwrap"><svg viewBox="0 0 918 300" role="img" aria-label="ตำแหน่งแนวตั้งของอักษรไทย" class="fig">
+<line x1="0" x2="918" y1="47.0" y2="47.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="41.0" class="fl">วรรณยุกต์เหนือสระบน <tspan class="fe">tone above vowel · 1200</tspan></text>
+<line x1="0" x2="918" y1="89.6" y2="89.6" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="83.6" class="fl">สระบน <tspan class="fe">upper vowel · 896</tspan></text>
+<line x1="0" x2="918" y1="133.0" y2="133.0" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="127.0" class="fl">ความสูงพยัญชนะ <tspan class="fe">consonant height · 586</tspan></text>
+<line x1="0" x2="918" y1="215.0" y2="215.0" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="none"/>
+<text x="4" y="209.0" class="fl">เส้นฐาน <tspan class="fe">baseline · 0</tspan></text>
+<line x1="0" x2="918" y1="261.2" y2="261.2" stroke="var(--ink)" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="4" y="255.2" class="fl">สระล่างและหางล่าง <tspan class="fe">below · -330</tspan></text>
+<path d="M381.34000000000003 101.17999999999999V197.5Q381.34000000000003 206.32 373.43 211.36Q365.52 216.4 351.38 216.4Q337.66 216.4 329.54 211.36Q321.42 206.32 321.42 197.5V160.82Q319.32 161.51999999999998 317.36 161.51999999999998Q311.2 161.51999999999998 307.21000000000004 157.52999999999997Q303.22 153.54 303.22 147.1Q303.22 140.94 307.42 136.95Q311.62 132.95999999999998 318.06 132.95999999999998Q324.78 132.95999999999998 329.04999999999995 137.08999999999997Q333.32 141.22 333.32 147.8V196.24Q333.32 201.0 338.28999999999996 203.87Q343.26 206.74 351.38 206.74Q359.92 206.74 364.68 203.94Q369.44 201.14 369.44 196.24V101.17999999999999ZM317.5 153.82Q320.44 153.82 322.26 151.93Q324.08 150.04 324.08 147.24Q324.08 144.44 322.26 142.55Q320.44 140.66 317.5 140.66Q314.7 140.66 312.81 142.55Q310.92 144.44 310.92 147.24Q310.92 150.04 312.81 151.93Q314.7 153.82 317.5 153.82Z  M507.34000000000003 150.18V215.0H495.44000000000005V150.32Q495.44000000000005 143.18 490.82000000000005 143.18Q488.58000000000004 143.18 487.39000000000004 144.23Q486.20000000000005 145.27999999999997 485.36 147.38L459.6 215.0H447.14000000000004V160.82Q445.04 161.51999999999998 443.08000000000004 161.51999999999998Q436.92 161.51999999999998 432.93000000000006 157.52999999999997Q428.94000000000005 153.54 428.94000000000005 147.1Q428.94000000000005 140.94 433.14000000000004 136.95Q437.34000000000003 132.95999999999998 443.78000000000003 132.95999999999998Q450.5 132.95999999999998 454.77 137.08999999999997Q459.04 141.22 459.04 147.8V184.48Q459.04 190.07999999999998 457.92 198.76L461.84000000000003 183.92L475.98 145.56Q480.6 132.95999999999998 492.36 132.95999999999998Q507.34000000000003 132.95999999999998 507.34000000000003 150.18ZM443.22 153.82Q446.16 153.82 447.98 151.93Q449.8 150.04 449.8 147.24Q449.8 144.44 447.98 142.55Q446.16 140.66 443.22 140.66Q440.42 140.66 438.53000000000003 142.55Q436.64000000000004 144.44 436.64000000000004 147.24Q436.64000000000004 150.04 438.53000000000003 151.93Q440.42 153.82 443.22 153.82Z M506.91999999999996 122.32Q496.69999999999993 118.25999999999999 483.4699999999999 116.08999999999999Q470.23999999999995 113.91999999999999 457.78 113.91999999999999Q449.09999999999997 113.91999999999999 443.0799999999999 114.89999999999999Q443.78 103.27999999999999 451.9 96.41999999999999Q460.0199999999999 89.55999999999999 473.17999999999995 89.55999999999999Q486.9 89.55999999999999 495.71999999999997 97.25999999999999V81.72H505.79999999999995V115.17999999999999Q506.35999999999996 117.55999999999999 506.91999999999996 122.32ZM496.28 112.38Q493.05999999999995 104.82 487.03999999999996 101.03999999999999Q481.02 97.25999999999999 473.17999999999995 97.25999999999999Q466.17999999999995 97.25999999999999 461.14 100.05999999999999Q456.09999999999997 102.85999999999999 454.41999999999996 107.33999999999999Q457.0799999999999 107.05999999999999 462.81999999999994 107.05999999999999Q471.63999999999993 107.05999999999999 480.5999999999999 108.45999999999998Q489.55999999999995 109.85999999999999 496.28 112.38Z M495.86000000000007 46.99999999999997H505.6600000000001V74.01999999999998H495.86000000000007Z  M562.5 179.72Q562.5 174.54 565.23 170.33999999999997Q567.96 166.14 572.72 164.04Q567.12 162.07999999999998 557.74 161.66Q558.3000000000001 153.12 562.6400000000001 146.61Q566.98 140.1 574.4000000000001 136.52999999999997Q581.82 132.95999999999998 591.34 132.95999999999998Q605.2 132.95999999999998 613.6 140.66Q622.0 148.36 622.0 161.24V215.0H610.1V162.35999999999999Q610.1 153.26 604.78 147.94Q599.46 142.62 590.36 142.62Q582.94 142.62 577.27 146.05Q571.6 149.48 569.36 155.35999999999999Q574.4 155.92 578.88 157.88Q583.36 159.84 585.74 162.35999999999999V164.88Q580.4200000000001 166.42 577.4100000000001 170.26999999999998Q574.4 174.12 574.4 179.3V215.0H562.5Z M611.08 245.8Q609.4 246.36 607.02 246.36Q601.98 246.36 598.76 243.14000000000001Q595.54 239.92000000000002 595.54 234.88Q595.54 229.84 599.25 226.62Q602.96 223.4 608.42 223.4Q614.58 223.4 618.29 226.69Q622.0 229.98 622.0 234.88V261.2H611.08ZM612.2 234.88Q612.2 232.64 610.8 231.24Q609.4 229.84 607.16 229.84Q604.92 229.84 603.52 231.24Q602.12 232.64 602.12 234.88Q602.12 237.12 603.52 238.52Q604.92 239.92000000000002 607.16 239.92000000000002Q609.4 239.92000000000002 610.8 238.52Q612.2 237.12 612.2 234.88Z M635.3000000000001 82.69999999999999Q634.0400000000001 93.47999999999999 627.53 101.6Q621.02 109.71999999999998 610.52 114.13Q600.02 118.53999999999999 587.14 118.53999999999999H581.82V112.93999999999998Q585.32 111.53999999999999 588.6800000000001 109.01999999999998Q592.0400000000001 106.49999999999999 594.4200000000001 103.41999999999999Q593.72 103.55999999999999 592.32 103.55999999999999Q587.14 103.55999999999999 584.2 100.41Q581.26 97.25999999999999 581.26 92.21999999999998Q581.26 87.32 584.62 84.16999999999999Q587.98 81.01999999999998 593.3000000000001 81.01999999999998Q598.62 81.01999999999998 602.05 84.38Q605.48 87.74 605.48 93.33999999999999Q605.48 97.53999999999999 603.31 102.36999999999999Q601.14 107.19999999999999 597.5 110.27999999999999Q608.5600000000001 108.74 616.0500000000001 100.97Q623.5400000000001 93.19999999999999 624.6600000000001 82.69999999999999ZM593.3000000000001 97.67999999999999Q595.5400000000001 97.67999999999999 597.01 96.21Q598.48 94.74 598.48 92.49999999999999Q598.48 90.25999999999999 597.01 88.78999999999999Q595.5400000000001 87.32 593.3000000000001 87.32Q590.9200000000001 87.32 589.52 88.72Q588.12 90.11999999999999 588.12 92.49999999999999Q588.12 94.74 589.59 96.21Q591.0600000000001 97.67999999999999 593.3000000000001 97.67999999999999Z  M772.2200000000001 134.35999999999999V197.36Q772.2200000000001 206.46 765.4300000000001 211.43Q758.6400000000001 216.4 747.3000000000001 216.4Q735.9600000000002 216.4 729.1700000000001 211.36Q722.3800000000001 206.32 722.3800000000001 197.22V162.35999999999999Q722.3800000000001 153.12 717.4800000000001 147.87Q712.5800000000002 142.62 703.6200000000001 142.62Q696.3400000000001 142.62 691.3000000000002 145.98Q686.2600000000001 149.33999999999997 684.0200000000001 155.35999999999999Q689.0600000000001 155.92 693.5400000000001 157.88Q698.0200000000001 159.84 700.4000000000001 162.35999999999999V164.88Q695.0800000000002 166.42 692.0700000000002 170.26999999999998Q689.0600000000001 174.12 689.0600000000001 179.3V188.96Q691.1600000000001 188.26 693.1200000000001 188.26Q699.4200000000001 188.26 703.3400000000001 192.11Q707.2600000000001 195.96 707.2600000000001 202.26Q707.2600000000001 208.56 703.1300000000001 212.48000000000002Q699.0000000000001 216.4 692.4200000000001 216.4Q685.7000000000002 216.4 681.4300000000001 212.26999999999998Q677.1600000000001 208.14 677.1600000000001 201.56V179.72Q677.1600000000001 174.54 679.8900000000001 170.33999999999997Q682.6200000000001 166.14 687.3800000000001 164.04Q682.0600000000001 162.07999999999998 672.4000000000001 161.66Q673.2400000000001 148.36 681.5700000000002 140.66Q689.9000000000001 132.95999999999998 704.3200000000002 132.95999999999998Q718.4600000000002 132.95999999999998 726.3700000000001 140.51999999999998Q734.2800000000001 148.07999999999998 734.2800000000001 161.24V197.22Q734.2800000000001 201.7 737.9200000000001 204.22Q741.5600000000002 206.74 747.44 206.74Q753.3200000000002 206.74 756.8900000000001 204.22Q760.4600000000002 201.7 760.4600000000002 197.22V134.35999999999999ZM692.9800000000001 195.82Q690.0400000000001 195.82 688.22 197.64Q686.4000000000001 199.46 686.4000000000001 202.26Q686.4000000000001 205.2 688.22 207.01999999999998Q690.0400000000001 208.84 692.9800000000001 208.84Q695.7800000000001 208.84 697.6700000000001 207.01999999999998Q699.5600000000001 205.2 699.5600000000001 202.26Q699.5600000000001 199.46 697.6700000000001 197.64Q695.7800000000001 195.82 692.9800000000001 195.82ZM761.5800000000002 222.42H772.2200000000001Q771.9400000000002 235.86 764.8000000000002 243.70000000000002Q757.6600000000001 251.54000000000002 744.6400000000001 251.54000000000002Q737.6400000000001 251.54000000000002 732.2500000000001 249.23000000000002Q726.8600000000001 246.92000000000002 723.8500000000001 242.93Q720.8400000000001 238.94 720.8400000000001 234.18Q720.8400000000001 228.72 724.2700000000002 225.43Q727.7000000000002 222.14 733.0200000000001 222.14Q738.6200000000001 222.14 742.0500000000002 225.22Q745.4800000000001 228.3 745.4800000000001 233.62Q745.4800000000001 236.7 744.0100000000001 239.22Q742.5400000000001 241.74 739.8800000000001 243.0Q741.9800000000001 243.84 744.7800000000001 243.84Q752.4800000000001 243.84 756.96 238.24Q761.44 232.64 761.5800000000002 222.42ZM733.0200000000001 239.08Q735.5400000000001 239.08 736.94 237.61Q738.3400000000001 236.14 738.3400000000001 233.76Q738.3400000000001 231.38 736.94 229.91Q735.5400000000001 228.44 733.0200000000001 228.44Q730.7800000000001 228.44 729.3800000000001 229.91Q727.9800000000001 231.38 727.9800000000001 233.76Q727.9800000000001 236.14 729.3800000000001 237.61Q730.7800000000001 239.08 733.0200000000001 239.08Z  M891.9200000000001 161.24V259.24H880.44Q877.9200000000001 254.76 872.46 250.49Q867.0 246.22 860.5600000000001 243.42000000000002Q859.02 250.84 854.6800000000001 255.18Q850.34 259.52 842.9200000000001 259.52Q836.2 259.52 831.79 256.15999999999997Q827.38 252.8 827.38 246.64000000000001Q827.38 239.92000000000002 832.35 236.07Q837.32 232.22 846.14 232.22Q849.78 232.22 854.26 233.34Q855.94 227.18 860.5600000000001 223.96L867.5600000000001 227.32Q863.78 230.12 862.1 236.14Q867.28 238.38 872.04 241.39Q876.8000000000001 244.4 880.1600000000001 247.62V162.35999999999999Q880.1600000000001 153.26 874.84 147.94Q869.52 142.62 860.7 142.62Q853.28 142.62 847.8199999999999 145.98Q842.36 149.33999999999997 840.12 155.35999999999999Q845.3000000000001 155.92 849.85 157.88Q854.4 159.84 856.78 162.35999999999999V164.88Q852.1600000000001 166.14 849.6400000000001 169.70999999999998Q847.12 173.28 847.12 177.9Q847.12 180.98 848.38 187.56Q850.0600000000001 196.52 850.0600000000001 201.14Q850.0600000000001 208.0 845.79 212.2Q841.52 216.4 834.6600000000001 216.4Q828.08 216.4 823.95 212.48000000000002Q819.82 208.56 819.82 202.26Q819.82 195.96 823.6700000000001 191.9Q827.52 187.84 833.82 187.84Q835.36 187.84 837.88 188.4Q836.2 182.94 836.2 178.32Q836.2 173.7 838.23 169.77999999999997Q840.26 165.85999999999999 843.76 164.04Q838.58 162.07999999999998 828.5 161.66Q829.0600000000001 153.26 833.19 146.75Q837.32 140.24 844.6 136.6Q851.88 132.95999999999998 861.5400000000001 132.95999999999998Q875.5400000000001 132.95999999999998 883.73 140.51999999999998Q891.9200000000001 148.07999999999998 891.9200000000001 161.24ZM840.82 202.12Q840.82 199.32 838.9300000000001 197.43Q837.0400000000001 195.54 834.24 195.54Q831.44 195.54 829.55 197.43Q827.66 199.32 827.66 202.12Q827.66 204.92 829.55 206.81Q831.44 208.7 834.24 208.7Q837.0400000000001 208.7 838.9300000000001 206.81Q840.82 204.92 840.82 202.12ZM852.72 240.48000000000002Q848.1 239.5 845.58 239.5Q841.52 239.5 838.86 241.18Q836.2 242.86 836.2 246.08Q836.2 249.02 837.8800000000001 250.63Q839.5600000000001 252.24 842.9200000000001 252.24Q846.84 252.24 849.1500000000001 249.09Q851.46 245.94 852.72 240.48000000000002Z" fill="var(--ink)"/>
+</svg></div>
+        <p class="cap">Figure 2. Vertical positions in Thai, shown with ป ที่ กุ้ ญ ฎ in Sarabun, shaped with HarfBuzz. The lines are measured from the outlines of the letters shown.</p>
+        <p class="prose">The depth of a Thai line comes from its marks. Microsoft's guide to Thai fonts groups the combining marks into classes by their level above or below the consonant, as in the table below, and checks that no more than one mark of a class is placed on the same base <span class="cite">(<a href="#en-r-ms-thai">Microsoft, 2022</a>)</span>. A Thai cluster can therefore carry up to four levels of marks above the consonant and two below it. The same mark does not always sit at the same height: in Figure 2 the tone mark of ที่ is lifted above the upper vowel, while the tone mark of กุ้ sits directly over the consonant. A font has to handle these positions for every consonant.</p>
+        <div class="tablewrap">
+          <table>
+            <caption class="cap" style="caption-side:bottom;text-align:left;padding-top:8px">Table 1. Levels of Thai combining marks, from Microsoft's guide to Thai fonts (2022).</caption>
+            <thead><tr><th>Class</th><th>Position</th><th>Marks</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">ABOVE1</td><td>Above, closest to the base</td><td class="marks" lang="th">◌ั ◌ิ ◌ี ◌ึ ◌ื</td></tr>
+              <tr><td class="mono">ABOVE2</td><td>Second level above</td><td class="marks" lang="th">◌็ ◌ํ</td></tr>
+              <tr><td class="mono">ABOVE3</td><td>Third level above</td><td class="marks" lang="th">◌่ ◌้ ◌๊ ◌๋</td></tr>
+              <tr><td class="mono">ABOVE4</td><td>Fourth level above</td><td class="marks" lang="th">◌์ ◌๎</td></tr>
+              <tr><td class="mono">BELOW1</td><td>Below, closest to the base</td><td class="marks" lang="th">◌ุ ◌ู</td></tr>
+              <tr><td class="mono">BELOW2</td><td>Second level below</td><td class="marks" lang="th">◌ฺ</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose">Unicode places Thai in the block U+0E00–U+0E7F. Tone marks and several vowel signs are combining marks, and marks above a consonant build outward in the order they are typed. Vowels written before a consonant, such as เ แ โ ใ ไ, are typed and stored before it, following the practice of the Thai Industrial Standard <span class="cite">(<a href="#en-r-unicode">Unicode Consortium, 2023, §16.1</a>)</span>.</p>
+      </article>
+
+      <article class="lesson" id="en-l6">
+        <span class="k">Lesson 6</span>
+        <h3>Thai inside a font file</h3>
+        <p class="prose">An OpenType font positions marks through its Glyph Positioning (GPOS) table. Mark-to-base attachment lines up an anchor on the mark with an anchor on the consonant, and the specification names Thai among the scripts that work this way <span class="cite">(<a href="#en-r-ms-gpos">Microsoft, n.d.</a>)</span>. Microsoft's guide to Thai fonts describes how the shaping engine processes Thai in three stages: it checks whether the combination of marks is valid, substitutes glyphs, and then positions them. It lists four OpenType features for a Thai font, in the order they are applied <span class="cite">(<a href="#en-r-ms-thai">Microsoft, 2022</a>)</span>.</p>
+        <div class="tablewrap">
+          <table>
+            <caption class="cap" style="caption-side:bottom;text-align:left;padding-top:8px">Table 2. OpenType features for a Thai font, from Microsoft's guide (2022).</caption>
+            <thead><tr><th>Feature</th><th>Function</th><th>Table</th><th>Required</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">ccmp</td><td>Character composition and decomposition</td><td class="mono">GSUB</td><td>No</td></tr>
+              <tr><td class="mono">kern</td><td>Pair kerning</td><td class="mono">GPOS</td><td>No</td></tr>
+              <tr><td class="mono">mark</td><td>Mark-to-base positioning</td><td class="mono">GPOS</td><td>Yes</td></tr>
+              <tr><td class="mono">mkmk</td><td>Mark-to-mark positioning</td><td class="mono">GPOS</td><td>Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose">Much of the Thai-specific work lies in ccmp. It splits sara am into its two parts so that tone marks can be placed correctly, and removes the lower part of ญ when a lower vowel such as sara u or sara uu follows. The same guide specifies that when a combination is invalid, the mark that causes it is shown on a dotted circle to tell the user, so a Thai font should contain the dotted circle (U+25CC); without it, the mark appears on an empty box <span class="cite">(<a href="#en-r-ms-thai">Microsoft, 2022</a>)</span>.</p>
+        <p class="prose">None of this is visible to a student drawing letters, yet all of it decides whether the font works. A student can draw a fine ป and place a tone mark well, and the font can still fail when the mark collides with the tall stem of ป in a word nobody thought to test. The rules of Thai spelling are fixed, so a program can check them completely; the craft of the letters is free, so the program must leave the designer the last word.</p>
+      </article>
+
+      <article class="lesson" id="en-l7">
+        <span class="k">Lesson 7</span>
+        <h3>The National Fonts and TH Sarabun New</h3>
+        <p class="prose">The Thai government made the National Fonts public property in 2010 and required public agencies to use TH Sarabun PSK, which became the standard typeface of official documents from 2011 <span class="cite">(<a href="#en-r-suveeranont">Suveeranont, 2025</a>)</span>. TH Sarabun New, which LAISUE carries, states in its licence notice that it is copyright 2010–2011 by the Software Industry Promotion Agency (SIPA), was designed by Suppakit Chalermlarp, and is free software under the GNU General Public License version 2 or later, with an exception for documents <span class="cite">(<a href="#en-r-sipa">Software Industry Promotion Agency, 2010–2011</a>)</span>. Thai students read this face every day in official papers, which is why LAISUE uses it as the grey reference letter behind each glyph and as the only typeface of its interface.</p>
+      </article>
+
+      <section class="lesson" id="en-refs" aria-labelledby="en-h-refs">
+        <h3 id="en-h-refs">References</h3>
+        <ul class="refs">
+          <li id="en-r-cadson">Cadson Demak. (2025, August 6). <i>Very well selected: Cadson Demak and the modern Thai typeface</i>. GRANSHAN. <a href="https://granshan.com/insights/very-well-selected-cadson-demak-and-the-modern-thai-typeface">https://granshan.com/insights/very-well-selected-cadson-demak-and-the-modern-thai-typeface</a></li>
+          <li id="en-r-gf-asc">Google Fonts. (n.d.-a). <i>Ascenders &amp; descenders</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/ascenders_descenders">https://fonts.google.com/knowledge/glossary/ascenders_descenders</a></li>
+          <li id="en-r-gf-baseline">Google Fonts. (n.d.-b). <i>Baseline</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/baseline">https://fonts.google.com/knowledge/glossary/baseline</a></li>
+          <li id="en-r-gf-cap">Google Fonts. (n.d.-c). <i>Cap height</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/cap_height">https://fonts.google.com/knowledge/glossary/cap_height</a></li>
+          <li id="en-r-gf-counter">Google Fonts. (n.d.-d). <i>Counter</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/counter">https://fonts.google.com/knowledge/glossary/counter</a></li>
+          <li id="en-r-gf-over">Google Fonts. (n.d.-e). <i>Overshoot</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/overshoot">https://fonts.google.com/knowledge/glossary/overshoot</a></li>
+          <li id="en-r-gf-spacing">Google Fonts. (n.d.-f). <i>Spacing</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/spacing">https://fonts.google.com/knowledge/glossary/spacing</a></li>
+          <li id="en-r-gf-xh">Google Fonts. (n.d.-h). <i>x-height</i>. Google Fonts Knowledge. <a href="https://fonts.google.com/knowledge/glossary/x_height">https://fonts.google.com/knowledge/glossary/x_height</a></li>
+          <li id="en-r-ms-gpos">Microsoft. (n.d.). <i>GPOS — The glyph positioning table</i> (OpenType specification 1.9.1). <a href="https://learn.microsoft.com/en-us/typography/opentype/spec/gpos">https://learn.microsoft.com/en-us/typography/opentype/spec/gpos</a></li>
+          <li id="en-r-ms-thai">Microsoft. (2022). <i>Developing OpenType fonts for Thai script</i>. <a href="https://learn.microsoft.com/en-us/typography/script-development/thai">https://learn.microsoft.com/en-us/typography/script-development/thai</a></li>
+          <li id="en-r-mitchell">Mitchell, B. (2014, September 11). <i>On loops and Latinisation</i>. Fontpad. <a href="https://www.fontpad.co.uk/?p=666">https://www.fontpad.co.uk/?p=666</a></li>
+          <li id="en-r-noordzij">Noordzij, G. (2005). <i>The stroke: Theory of writing</i> (P. Enneson, Trans.). Hyphen Press. (Original work published 1985) <a href="https://www.hyphenpress.co.uk/products/books/978-0-907259-30-5">https://www.hyphenpress.co.uk/products/books/978-0-907259-30-5</a></li>
+          <li id="en-r-punsongserm">Punsongserm, R., Sunaga, S., &amp; Ihara, H. (2017). Thai typefaces (Part 1): Assumption on visibility and legibility problems. <i>Archives of Design Research, 30</i>(1), 5–23. <a href="https://doi.org/10.15187/adr.2017.02.30.1.5">https://doi.org/10.15187/adr.2017.02.30.1.5</a></li>
+          <li id="en-r-sipa">Software Industry Promotion Agency. (2010–2011). <i>TH Sarabun New</i> [Font; licence notice distributed with the font]. Designed by Suppakit Chalermlarp.</li>
+          <li id="en-r-suveeranont">Suveeranont, P. (2025). <i>History of Thai typography</i>. Typotheque. <a href="https://www.typotheque.com/articles/history-of-thai-typography">https://www.typotheque.com/articles/history-of-thai-typography</a></li>
+          <li id="en-r-unicode">Unicode Consortium. (2023). Chapter 16: Southeast Asia. In <i>The Unicode Standard, version 15.1.0</i>. <a href="https://www.unicode.org/versions/Unicode15.1.0/ch16.pdf">https://www.unicode.org/versions/Unicode15.1.0/ch16.pdf</a></li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <section class="win" id="en-research" aria-labelledby="en-h-res">
+    <div class="tb"><span>Research participants</span></div>
+    <div class="wb">
+      <h2 id="en-h-res">Call for research participants</h2>
+      <div id="research-state-en"></div>
+      <p class="prose muted" style="font-size:16px">This website collects no research data and no personal information about its visitors.</p>
+    </div>
+  </section>
+
+  <section class="win" id="en-impact" aria-labelledby="en-h-imp">
+    <div class="tb"><span>Use</span></div>
+    <div class="wb">
+      <h2 id="en-h-imp">LAISUE in and out of the classroom</h2>
+      <div class="panes">
+        <div class="pane">
+          <span class="label">Downloads</span>
+          <div id="stat-downloads-en"></div>
+        </div>
+        <div class="pane">
+          <span class="label">Institutions using LAISUE</span>
+          <div id="institutions-en"></div>
+        </div>
+      </div>
+      <h3>Fonts made with LAISUE</h3>
+      <div id="gallery-en"></div>
+      <p class="muted" style="font-size:16px">Every font shown here appears with the consent of the designer who owns it. Institutions that use LAISUE in their teaching are welcome to send the name of the institution and the course to the developer by email.</p>
+    </div>
+  </section>
+
+  <section class="win" id="en-about" aria-labelledby="en-h-about">
+    <div class="tb"><span>Developer</span></div>
+    <div class="wb">
+      <h2 id="en-h-about">Developer</h2>
+      <p class="prose"><b>Asst. Prof. Dr. Kittithat Srifa</b><br>Digital Media Design Programme, Faculty of Architecture and Design, Rajamangala University of Technology Rattanakosin</p>
+      <p class="prose">The developer set the goals, designed the interface and made every decision in the development of LAISUE, using Claude by Anthropic as the tool that wrote the code. The copyright of the program belongs to the developer.</p>
+      <div class="btns">
+        <span class="copybox"><span id="mail-en">kittithat.sri@rmutr.ac.th</span><button type="button" data-copy="mail-en">Copy email</button></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p data-l="th" lang="th" style="max-width:980px;margin:0 auto;font-size:14px">ลายสือ · LAISUE 2.8 · © 2569 กิตติธัช ศรีฟ้า · ฟอนต์ที่สร้างด้วยลายสือเป็นของผู้ออกแบบแต่ละคน</p>
+  <p data-l="en" lang="en" style="max-width:980px;margin:0 auto;font-size:14px">LAISUE 2.8 · © 2026 Kittithat Srifa · Fonts made with LAISUE belong to the people who design them.</p>
+</footer>
+
+<script>
+/* ============================================================
+   ตั้งค่าเว็บไซต์ แก้เฉพาะส่วนนี้เมื่อมีข้อมูลใหม่
+   ช่องที่ว่าง ("" หรือ []) จะแสดงเป็นสถานะ "ยังไม่เปิด" หรือ "ยังไม่มีข้อมูล"
+   ============================================================ */
+const SITE = {
+  // บัญชีและคลัง GitHub ที่เก็บแฟ้มดาวน์โหลดไว้ใน Releases (ใช้นับยอดดาวน์โหลดอัตโนมัติ)
+  github: { owner: "", repo: "" },
+
+  // ลิงก์ดาวน์โหลด (แฟ้ม .dmg ใหญ่เกิน 100 MB ต้องวางใน GitHub Releases)
+  downloads: {
+    appleSilicon: "",   // LAISUE-2.8-AppleSilicon.dmg
+    intel: "",          // LAISUE-2.8-Intel.dmg
+    guide: "",          // คู่มือการใช้งาน PDF
+    form: ""            // แบบฟอร์ม A4 6 หน้า PDF
+  },
+
+  // เปิดหน้ารับสมัครได้ก็ต่อเมื่อกรอกเลขที่รับรองจากคณะกรรมการจริยธรรมแล้วเท่านั้น
+  ethics: {
+    approvalNo: "",         // เลขที่หนังสือรับรอง
+    approvalDate: "",       // วันที่รับรอง
+    announcementUrl: "",    // แฟ้มประกาศรับสมัครฉบับที่คณะกรรมการรับรอง (ภาษาไทย)
+    announcementUrlEn: "",  // ฉบับภาษาอังกฤษ ถ้าคณะกรรมการรับรองไว้ (ว่างไว้ได้)
+    studentFormUrl: "",     // Google Form แบบวัด SUS (บัญชีมหาวิทยาลัย)
+    expertFormUrl: ""       // Google Form แบบประเมินผู้เชี่ยวชาญ (บัญชีมหาวิทยาลัย)
+  },
+
+  // ยอดดาวน์โหลดที่กรอกเอง (ใช้เมื่อไม่ได้ตั้งค่า github ด้านบน)
+  manualDownloads: { count: null, asOf: "" },
+
+  // สถาบันที่นำไปใช้ เช่น { name: "ชื่อไทย", nameEn: "English name", course: "…", term: "1/2570" }
+  institutions: [],
+
+  // ฟอนต์จากผู้ใช้ ใส่เฉพาะรายที่ได้รับความยินยอมแล้ว
+  // เช่น { font: "…", designer: "…", institution: "…", image: "fonts/xxx.png", consent: true }
+  fonts: []
+};
+/* ============================================================ */
+
+const $ = (s) => document.querySelector(s);
+const esc = (t) => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+const T = {
+  th: {
+    dl: "ดาวน์โหลด", notyet: "ยังไม่เปิดให้ดาวน์โหลด",
+    apple: "สำหรับ Mac ชิป Apple (M1 หรือใหม่กว่า)", intel: "สำหรับ Mac ชิป Intel",
+    guide: ["คู่มือการใช้งานลายสือ 2.8", "PDF 11 หน้า ภาษาไทยและภาษาอังกฤษ"],
+    form: ["แบบฟอร์ม A4 ลายสือ", "PDF 6 หน้า 188 ช่อง"],
+    formLong: "PDF 6 หน้า พิมพ์บนกระดาษ A4 ที่ขนาด 100% หรือเปิดเขียนบน iPad",
+    closed: "ยังไม่เปิดรับสมัคร", open: "เปิดรับสมัคร",
+    closedText: "โครงการ การสร้างสรรค์โปรแกรมลายสือ เพื่อให้การออกแบบชุดตัวอักษรไทยเป็นเรื่องง่ายและแพร่หลาย สู่การสืบสานอักษรไทยในยุคดิจิทัล จะเปิดรับสมัครผู้เข้าร่วมการวิจัยหลังจากได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์แล้ว ประกาศรับสมัครจะเผยแพร่ที่หน้านี้ โดยใช้ข้อความตามฉบับที่คณะกรรมการรับรองเท่านั้น",
+    approved: (no, d) => `ได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ เลขที่ <b>${no}</b>${d ? ` เมื่อวันที่ ${d}` : ""}`,
+    ann: "อ่านประกาศรับสมัคร", stu: "แบบสอบถามสำหรับนักศึกษา", exp: "แบบประเมินสำหรับผู้เชี่ยวชาญ",
+    noStats: "ยังไม่มีข้อมูล ตัวเลขจะแสดงเมื่อเปิดให้ดาวน์โหลดแล้ว", loading: "กำลังโหลดตัวเลข…",
+    times: (d) => `ครั้ง ข้อมูล ณ ${d}`, timesGh: (d) => `ครั้ง นับรวมแฟ้ม .dmg ทุกรุ่นจาก GitHub Releases ข้อมูล ณ ${d}`,
+    locale: "th-TH", term: "ภาคเรียน",
+    noInst: "ยังไม่มีรายชื่อ สถาบันที่นำไปใช้จะแสดงที่นี่",
+    noFonts: "ยังไม่มีฟอนต์ที่เผยแพร่ ฟอนต์ที่ผู้ออกแบบยินยอมให้แสดงจะปรากฏที่นี่", fontAlt: "ตัวอย่างฟอนต์",
+    copied: "คัดลอกแล้ว", copyKey: "กด ⌘C เพื่อคัดลอก"
+  },
+  en: {
+    dl: "Download", notyet: "Not yet available",
+    apple: "For Macs with an Apple chip (M1 or later)", intel: "For Macs with an Intel chip",
+    guide: ["LAISUE 2.8 user guide", "PDF, 11 pages, Thai and English"],
+    form: ["LAISUE A4 form", "PDF, 6 pages, 188 boxes"],
+    formLong: "PDF, 6 pages. Print on A4 at 100%, or write on it on an iPad",
+    closed: "Not yet open", open: "Open",
+    closedText: "The project Creating LAISUE: Making Thai Typeface Design Easy and Widespread to Sustain the Thai Script in the Digital Age will invite research participants once it has been approved by the Human Research Ethics Committee. The call will be published on this page, using only the text approved by the committee.",
+    approved: (no, d) => `Approved by the Human Research Ethics Committee, approval no. <b>${no}</b>${d ? `, ${d}` : ""}.`,
+    ann: "Read the call for participants", stu: "Student questionnaire", exp: "Expert evaluation form",
+    noStats: "No figures yet. Downloads will be counted once the program is available.", loading: "Loading figures…",
+    times: (d) => `downloads, as of ${d}`, timesGh: (d) => `downloads of all .dmg files on GitHub Releases, as of ${d}`,
+    locale: "en-GB", term: "term",
+    noInst: "No institutions listed yet. Institutions that use LAISUE will appear here.",
+    noFonts: "No fonts published yet. Fonts whose designers agree to show them will appear here.", fontAlt: "Sample of the font",
+    copied: "Copied", copyKey: "Press ⌘C to copy"
+  }
+};
+
+const ICON_DISK = '<svg class="ic" viewBox="0 0 38 46" aria-hidden="true"><path d="M2 2h24l10 10v32H2z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><path d="M26 2v10h10" fill="none" stroke="var(--ink)" stroke-width="2.5"/><rect x="9" y="22" width="20" height="14" fill="var(--ink)"/></svg>';
+const ICON_DOC = '<svg class="ic" viewBox="0 0 38 46" aria-hidden="true"><path d="M2 2h24l10 10v32H2z" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><path d="M26 2v10h10" fill="none" stroke="var(--ink)" stroke-width="2.5"/><path d="M9 20h20M9 26h20M9 32h14" stroke="var(--ink)" stroke-width="2.5"/></svg>';
+const ARROW = '<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v11M4 8l5 5 5-5M3 16h12" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>';
+
+function fileRow(t, icon, name, desc, size, url) {
+  const act = url
+    ? `<a class="btn" href="${esc(url)}" rel="noopener">${ARROW}${t.dl}</a>`
+    : `<span class="btn" aria-disabled="true">${t.notyet}</span>`;
+  return `<div class="file">${icon}<div><div class="nm">${esc(name)}</div><div class="ds">${esc(desc)}</div></div>
+    <div class="act" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">${size ? `<span class="sz">${esc(size)}</span>` : ""}${act}</div></div>`;
+}
+
+function renderLang(L) {
+  const t = T[L], D = SITE.downloads, E = SITE.ethics;
+  $("#files-" + L).innerHTML =
+    fileRow(t, ICON_DISK, "LAISUE-2.8-AppleSilicon.dmg", t.apple, "133.6 MB", D.appleSilicon) +
+    fileRow(t, ICON_DISK, "LAISUE-2.8-Intel.dmg", t.intel, "143.9 MB", D.intel) +
+    fileRow(t, ICON_DOC, t.guide[0], t.guide[1], "", D.guide) +
+    fileRow(t, ICON_DOC, t.form[0], t.form[1], "", D.form);
+  $("#form-files-" + L).innerHTML = fileRow(t, ICON_DOC, t.form[0], t.formLong, "", D.form);
+
+  /* research: opens only with an ethics approval number */
+  const rs = $("#research-state-" + L);
+  if (!E.approvalNo) {
+    rs.innerHTML = `<span class="status"><i></i>${t.closed}</span><p class="prose">${t.closedText}</p>`;
+  } else {
+    const ann = (L === "en" && E.announcementUrlEn) ? E.announcementUrlEn : E.announcementUrl;
+    const links = [];
+    if (ann) links.push(`<a class="btn primary" href="${esc(ann)}" rel="noopener">${t.ann}</a>`);
+    if (E.studentFormUrl) links.push(`<a class="btn" href="${esc(E.studentFormUrl)}" rel="noopener">${t.stu}</a>`);
+    if (E.expertFormUrl) links.push(`<a class="btn" href="${esc(E.expertFormUrl)}" rel="noopener">${t.exp}</a>`);
+    rs.innerHTML = `<span class="status on"><i></i>${t.open}</span><p class="prose">${t.approved(esc(E.approvalNo), esc(E.approvalDate))}</p>${links.length ? `<div class="btns">${links.join("")}</div>` : ""}`;
+  }
+
+  const inst = SITE.institutions;
+  $("#institutions-" + L).innerHTML = inst.length
+    ? `<ul class="inst">${inst.map(i => `<li><b>${esc(L === "en" && i.nameEn ? i.nameEn : i.name)}</b>${i.course ? `<br><span class="muted" style="font-size:15px">${esc(i.course)}${i.term ? ` · ${t.term} ${esc(i.term)}` : ""}</span>` : ""}</li>`).join("")}</ul>`
+    : `<div class="empty">${t.noInst}</div>`;
+
+  const fonts = SITE.fonts.filter(f => f && f.consent === true);
+  $("#gallery-" + L).innerHTML = fonts.length
+    ? `<div class="gallery">${fonts.map(f => `<figure class="card"><img src="${esc(f.image)}" alt="${t.fontAlt} ${esc(f.font)}" loading="lazy"><div><b>${esc(f.font)}</b><br>${esc(f.designer)}${f.institution ? ` · ${esc(f.institution)}` : ""}</div></figure>`).join("")}</div>`
+    : `<div class="empty">${t.noFonts}</div>`;
+}
+
+function showStats(n, kind, d) {
+  ["th", "en"].forEach(L => {
+    const t = T[L], box = $("#stat-downloads-" + L);
+    if (kind === "none") box.innerHTML = `<div class="empty">${t.noStats}</div>`;
+    else if (kind === "loading") box.innerHTML = `<div class="empty">${t.loading}</div>`;
+    else {
+      const when = kind === "gh" ? new Date().toLocaleDateString(t.locale, { day: "numeric", month: "long", year: "numeric" }) : esc(d);
+      box.innerHTML = `<div class="big">${Number(n).toLocaleString(t.locale)}</div><p class="muted" style="font-size:15px">${kind === "gh" ? t.timesGh(when) : t.times(when)}</p>`;
+    }
+  });
+}
+
+renderLang("th");
+renderLang("en");
+
+(function () {
+  const m = SITE.manualDownloads, g = SITE.github;
+  const fallback = () => m.count != null ? showStats(m.count, "manual", m.asOf) : showStats(0, "none");
+  if (!g.owner || !g.repo) return fallback();
+  showStats(0, "loading");
+  fetch(`https://api.github.com/repos/${encodeURIComponent(g.owner)}/${encodeURIComponent(g.repo)}/releases?per_page=100`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(rel => {
+      let n = 0;
+      rel.forEach(r => (r.assets || []).forEach(a => { if (/\.dmg$/i.test(a.name)) n += a.download_count; }));
+      showStats(n, "gh");
+    })
+    .catch(fallback);
+})();
+
+/* language switch: remembered per viewer; first visit follows the browser language */
+const SECTION_MAP = ["top", "download", "install", "form", "lessons", "research", "impact", "about"];
+function setLang(L, keepPlace) {
+  const root = document.documentElement;
+  const prev = root.getAttribute("data-lang");
+  root.setAttribute("data-lang", L);
+  root.lang = L;
+  document.querySelectorAll("[data-set-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.setLang === L)));
+  document.title = L === "en" ? "LAISUE" : "ลายสือ LAISUE";
+  try { localStorage.setItem("laisue-lang", L); } catch (e) {}
+  if (keepPlace && prev && prev !== L) {
+    const h = location.hash.replace(/^#/, "");
+    let target = null;
+    if (L === "en" && h && !h.startsWith("en-")) target = "en-" + h;
+    if (L === "th" && h.startsWith("en-")) target = h.slice(3);
+    if (target && document.getElementById(target)) {
+      history.replaceState(null, "", "#" + target);
+      document.getElementById(target).scrollIntoView();
+    }
+  }
+}
+(function () {
+  let L = null;
+  try { L = localStorage.getItem("laisue-lang"); } catch (e) {}
+  const h = location.hash.replace(/^#/, "");
+  if (h.startsWith("en-")) L = "en";
+  else if (h && SECTION_MAP.includes(h)) L = L || "th";
+  if (L !== "th" && L !== "en") L = (navigator.language || "th").toLowerCase().startsWith("th") ? "th" : "en";
+  setLang(L, false);
+  if (h && document.getElementById(h)) document.getElementById(h).scrollIntoView();
+})();
+document.addEventListener("click", (ev) => {
+  const s = ev.target.closest("[data-set-lang]");
+  if (s) { setLang(s.dataset.setLang, true); return; }
+  const b = ev.target.closest("button[data-copy]");
+  if (!b) return;
+  const t = T[document.documentElement.getAttribute("data-lang") || "th"];
+  const el = document.getElementById(b.dataset.copy);
+  const text = el.textContent.trim();
+  const label = b.textContent;
+  const done = () => { b.textContent = t.copied; setTimeout(() => b.textContent = label, 1600); };
+  const select = () => { const r = document.createRange(); r.selectNodeContents(el); const s2 = getSelection(); s2.removeAllRanges(); s2.addRange(r); b.textContent = t.copyKey; };
+  try { navigator.clipboard.writeText(text).then(done, select); } catch (e) { select(); }
+});
+</script>
+
+</body>
+</html>
