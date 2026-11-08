@@ -50,6 +50,7 @@ code,.mono{font-family:var(--mono);font-size:.84em}
 .langsw button{font:inherit;font-size:14px;font-weight:600;border:0;background:var(--paper);color:var(--ink);padding:1px 10px;cursor:pointer;line-height:1.5}
 .langsw button+button{border-left:1.5px solid var(--ink)}
 .langsw button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+[hidden]{display:none!important}
 html[data-lang="en"] [data-l="th"],html:not([data-lang="en"]) [data-l="en"]{display:none!important}
 .menubar nav::-webkit-scrollbar{display:none}
 .menubar a{flex:none;text-decoration:none;padding:2px 12px;font-size:16px;white-space:nowrap}
@@ -204,6 +205,7 @@ html{scroll-behavior:smooth}
       <a href="#lessons">บทเรียน</a>
       <a href="#research">ร่วมวิจัย</a>
       <a href="#impact">ผลการนำไปใช้</a>
+      <a href="#feedback" data-needs="feedback">ความคิดเห็น</a>
       <a href="#about">ผู้พัฒนา</a>
     </nav>
     <nav data-l="en" lang="en" aria-label="Main menu">
@@ -214,6 +216,7 @@ html{scroll-behavior:smooth}
       <a href="#en-lessons">Lessons</a>
       <a href="#en-research">Research</a>
       <a href="#en-impact">Use</a>
+      <a href="#en-feedback" data-needs="feedback">Feedback</a>
       <a href="#en-about">Developer</a>
     </nav>
     <div class="langsw" role="group" aria-label="ภาษา / Language">
@@ -301,6 +304,7 @@ html{scroll-behavior:smooth}
       <h2 id="h-dl">ดาวน์โหลดลายสือ 2.8</h2>
       <p class="prose">เลือกแฟ้มให้ตรงกับชิปของเครื่อง ดูได้ที่เมนู Apple › เกี่ยวกับ Mac เครื่องนี้ (About This Mac) ในช่องชิปหรือโปรเซสเซอร์ เครื่องที่ใช้ชิป M1, M2, M3, M4 หรือรุ่นใหม่กว่า ให้เลือกแฟ้มสำหรับชิป Apple ส่วนเครื่องที่ใช้ชิป Intel ให้เลือกแฟ้มสำหรับ Intel โปรแกรมต้องใช้ macOS 12 ขึ้นไป</p>
       <div class="files" id="files-th"></div>
+      <p class="muted" data-needs="feedback" style="font-size:16px">ใช้แล้วเป็นอย่างไร <a id="fb-link-th" href="#" rel="noopener">บอกเราได้ที่แบบฟอร์มสั้น ๆ</a> (ไม่บังคับ)</p>
       <div class="alert">
         <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="22" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><path d="M9 14l5 5 9-10" fill="none" stroke="var(--ink)" stroke-width="3"/></svg>
         <p>ตัวโปรแกรมไม่ส่งข้อมูลของผู้ใช้หรือแฟ้มงานออกไปยังเซิร์ฟเวอร์ใด ๆ งานทั้งหมดอยู่ในเครื่องของผู้ใช้ ส่วนเชื่อมต่อกับ Claude ทำงานก็ต่อเมื่อผู้ใช้เปิดใช้เองเท่านั้น</p>
@@ -571,6 +575,16 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
+  <!-- FEEDBACK -->
+  <section class="win" id="feedback" aria-labelledby="h-fb" data-needs="feedback">
+    <div class="tb"><span>ความคิดเห็น</span></div>
+    <div class="wb">
+      <h2 id="h-fb">บอกเราเกี่ยวกับลายสือ</h2>
+      <p class="prose">ใช้แล้วชอบอะไร ติดขัดตรงไหน หรือพบปัญหาอะไร บอกเราได้ทางแบบฟอร์มสั้น ๆ ไม่ต้องลงชื่อเข้าใช้และไม่ต้องใส่ชื่อ ทุกข้อไม่บังคับตอบ ความคิดเห็นส่งถึงผู้พัฒนาโดยตรง และใช้ปรับปรุงลายสือรุ่นต่อไป</p>
+      <div class="btns"><a class="btn primary" id="fb-btn-th" href="#" rel="noopener">เขียนความคิดเห็น</a></div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section class="win" id="about" aria-labelledby="h-about">
     <div class="tb"><span>ผู้พัฒนา</span></div>
@@ -663,6 +677,7 @@ html{scroll-behavior:smooth}
       <h2 id="en-h-dl">Download LAISUE 2.8</h2>
       <p class="prose">Choose the file for your Mac's chip, shown under Apple menu › About This Mac, next to Chip or Processor. Macs with an M1, M2, M3, M4 or later chip use the Apple Silicon file; Macs with an Intel chip use the Intel file. macOS 12 or later is required.</p>
       <div class="files" id="files-en"></div>
+      <p class="muted" data-needs="feedback" style="font-size:16px">Tried it? <a id="fb-link-en" href="#" rel="noopener">Tell us in a short form</a> (optional).</p>
       <div class="alert">
         <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="22" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><path d="M9 14l5 5 9-10" fill="none" stroke="var(--ink)" stroke-width="3"/></svg>
         <p>The program sends no user data or project files to any server. All work stays on your computer. The link to Claude runs only when you switch it on yourself.</p>
@@ -928,6 +943,15 @@ html{scroll-behavior:smooth}
     </div>
   </section>
 
+  <section class="win" id="en-feedback" aria-labelledby="en-h-fb" data-needs="feedback">
+    <div class="tb"><span>Feedback</span></div>
+    <div class="wb">
+      <h2 id="en-h-fb">Tell us about LAISUE</h2>
+      <p class="prose">What did you like, where did you get stuck, and what went wrong? Tell us in a short form. You don't need to sign in or give your name, and every question is optional. Your comments go straight to the developer and help shape the next version of LAISUE.</p>
+      <div class="btns"><a class="btn primary" id="fb-btn-en" href="#" rel="noopener">Write feedback</a></div>
+    </div>
+  </section>
+
   <section class="win" id="en-about" aria-labelledby="en-h-about">
     <div class="tb"><span>Developer</span></div>
     <div class="wb">
@@ -974,6 +998,9 @@ const SITE = {
     studentFormUrl: "",     // Google Form แบบวัด SUS (บัญชีมหาวิทยาลัย)
     expertFormUrl: ""       // Google Form แบบประเมินผู้เชี่ยวชาญ (บัญชีมหาวิทยาลัย)
   },
+
+  // ลิงก์ Google Form ความคิดเห็นและข้อมูลผู้ใช้ (ไม่บังคับตอบ) ถ้าว่าง ส่วนความคิดเห็นจะไม่แสดง
+  feedbackUrl: "",
 
   // ยอดดาวน์โหลดที่กรอกเอง (ใช้เมื่อไม่ได้ตั้งค่า github ด้านบน)
   manualDownloads: { count: null, asOf: "" },
@@ -1086,6 +1113,13 @@ function showStats(n, kind, d) {
 
 renderLang("th");
 renderLang("en");
+
+/* feedback form: shown only when a link is set */
+(function () {
+  const u = SITE.feedbackUrl;
+  document.querySelectorAll('[data-needs="feedback"]').forEach(e => { e.hidden = !u; });
+  if (u) ["fb-btn-th", "fb-btn-en", "fb-link-th", "fb-link-en"].forEach(id => { const a = document.getElementById(id); if (a) a.href = u; });
+})();
 
 (function () {
   const m = SITE.manualDownloads, g = SITE.github;
