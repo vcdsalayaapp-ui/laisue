@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ลายสือ LAISUE</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="ลายสือ โปรแกรมสร้างฟอนต์ภาษาไทยจากลายมือสำหรับ macOS แจกฟรีสำหรับนักเรียนและนักศึกษาไทย">
+<meta name="description" content="ลายสือ โปรแกรมสร้างฟอนต์ภาษาไทยจากลายมือสำหรับ Mac และ Windows แจกฟรีสำหรับนักเรียนและนักศึกษาไทย">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,6 +122,7 @@ ol.num{margin:0;padding-left:1.6em;display:flex;flex-direction:column;gap:10px}
 
 /* files */
 .files{display:flex;flex-direction:column;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.fgrp{padding:14px 0 4px;font-weight:600;font-size:15px;letter-spacing:.06em;border-bottom:1px dotted var(--ink)}
 .file{display:grid;grid-template-columns:auto 1fr auto;gap:6px 18px;align-items:center;padding:14px 0;border-bottom:1px dotted var(--ink)}
 .file:last-child{border-bottom:0}
 .file .ic{width:38px;height:46px;flex:none}
@@ -234,13 +235,13 @@ html{scroll-behavior:smooth}
     <div class="wb">
       <div class="copy">
         <h1 id="h-hero">ลายสือ<small>LAISUE</small></h1>
-        <p class="lead">โปรแกรมสร้างฟอนต์ภาษาไทยจากลายมือ สำหรับเครื่อง Mac แจกฟรีให้นักเรียนและนักศึกษาไทย</p>
+        <p class="lead">โปรแกรมสร้างฟอนต์ภาษาไทยจากลายมือ สำหรับเครื่อง Mac และ Windows แจกฟรีให้นักเรียนและนักศึกษาไทย</p>
         <p class="prose">เขียนตัวอักษรด้วยมือลงแบบฟอร์ม A4 จำนวน 6 หน้า ถ่ายภาพหรือสแกน แล้วให้โปรแกรมอ่านลายมือออกมาเป็นตัวอักษร ลายสือสร้างกฎการวางสระและวรรณยุกต์ให้เองโดยอัตโนมัติ ตรวจการประกอบคำภาษาไทยก่อนส่งออก และส่งออกเป็นฟอนต์ OpenType ที่ใช้ได้ทั้งในโปรแกรมกราฟิกและโปรแกรมเอกสาร ชุดเดียวกันนี้ทำตัวอักษรภาษาอังกฤษได้ด้วย</p>
         <div class="btns">
           <a class="btn primary" href="#download">ดาวน์โหลดลายสือ 2.8</a>
           <a class="btn" href="#install">วิธีติดตั้ง</a>
         </div>
-        <div class="meta"><span>รุ่น 2.8</span><span>พฤศจิกายน 2569</span><span>macOS 12 ขึ้นไป</span><span>ชิป Apple และ Intel</span></div>
+        <div class="meta"><span>รุ่น 2.8</span><span>พฤศจิกายน 2569</span><span>macOS 12 ขึ้นไป</span><span>Windows 10 และ 11 (64 บิต)</span></div>
       </div>
       <img class="icon" src="assets/laisue-icon.png" alt="ไอคอนโปรแกรมลายสือ ภาพพิกเซลขาวดำรูปกระดาษพับมุมกับตัวอักษร ล" width="192" height="192">
       <div class="specimen" aria-label="ตัวอย่างคำที่ฟอนต์ไทยต้องวางสระและวรรณยุกต์ให้ถูกที่">
@@ -302,7 +303,7 @@ html{scroll-behavior:smooth}
     <div class="tb"><span>ดาวน์โหลด</span></div>
     <div class="wb">
       <h2 id="h-dl">ดาวน์โหลดลายสือ 2.8</h2>
-      <p class="prose">เลือกแฟ้มให้ตรงกับชิปของเครื่อง ดูได้ที่เมนู Apple › เกี่ยวกับ Mac เครื่องนี้ (About This Mac) ในช่องชิปหรือโปรเซสเซอร์ เครื่องที่ใช้ชิป M1, M2, M3, M4 หรือรุ่นใหม่กว่า ให้เลือกแฟ้มสำหรับชิป Apple ส่วนเครื่องที่ใช้ชิป Intel ให้เลือกแฟ้มสำหรับ Intel โปรแกรมต้องใช้ macOS 12 ขึ้นไป</p>
+      <p class="prose">สำหรับ Mac เลือกแฟ้มให้ตรงกับชิปของเครื่อง ดูได้ที่เมนู Apple › เกี่ยวกับ Mac เครื่องนี้ (About This Mac) ในช่องชิปหรือโปรเซสเซอร์ เครื่องที่ใช้ชิป M1, M2, M3, M4 หรือรุ่นใหม่กว่า ให้เลือกแฟ้มสำหรับชิป Apple ส่วนเครื่องที่ใช้ชิป Intel ให้เลือกแฟ้มสำหรับ Intel โปรแกรมต้องใช้ macOS 12 ขึ้นไป สำหรับ Windows ใช้ได้กับ Windows 10 และ 11 แบบ 64 บิต เลือกตัวติดตั้งสำหรับเครื่องของตัวเอง หรือดาวน์โหลดชุดเต็มซึ่งมีรุ่นพกพาที่ไม่ต้องติดตั้งรวมอยู่ด้วย</p>
       <div class="files" id="files-th"></div>
       <p class="muted" data-needs="feedback" style="font-size:16px">ใช้แล้วเป็นอย่างไร <a id="fb-link-th" href="#" rel="noopener">บอกเราได้ที่แบบฟอร์มสั้น ๆ</a> (ไม่บังคับ)</p>
       <div class="alert">
@@ -315,9 +316,9 @@ html{scroll-behavior:smooth}
   <!-- INSTALL / UNINSTALL -->
   <div class="row" id="install">
     <section class="win" aria-labelledby="h-inst">
-      <div class="tb"><span>การติดตั้ง</span></div>
+      <div class="tb"><span>การติดตั้งบน Mac</span></div>
       <div class="wb">
-        <h2 id="h-inst">ติดตั้งโปรแกรม</h2>
+        <h2 id="h-inst">ติดตั้งบน Mac</h2>
         <ol class="num">
           <li>ดับเบิลคลิกแฟ้ม .dmg ที่ดาวน์โหลดมา แล้วลากไอคอน LAISUE ไปวางในโฟลเดอร์ Applications</li>
           <li>เปิด LAISUE จากโฟลเดอร์ Applications</li>
@@ -337,15 +338,48 @@ html{scroll-behavior:smooth}
     </section>
 
     <section class="win" aria-labelledby="h-un">
-      <div class="tb"><span>การลบโปรแกรม</span></div>
+      <div class="tb"><span>การลบโปรแกรมจาก Mac</span></div>
       <div class="wb">
-        <h2 id="h-un">ลบโปรแกรมออกจากเครื่อง</h2>
+        <h2 id="h-un">ลบโปรแกรมจาก Mac</h2>
         <ol class="num">
           <li>บันทึกงานให้เรียบร้อย แล้วปิดโปรแกรมด้วย <kbd>⌘Q</kbd></li>
           <li>เปิด Finder ไปที่โฟลเดอร์ Applications ลาก LAISUE ไปที่ถังขยะ แล้วล้างถังขยะ</li>
           <li>ถ้าต้องการลบข้อมูลที่โปรแกรมสร้างไว้ด้วย ใน Finder เลือกเมนู Go › Go to Folder… (<kbd>⇧⌘G</kbd>) แล้วลบสองรายการนี้ คือโฟลเดอร์ <span class="path">~/.laisue</span> ซึ่งเก็บสำเนาสำรองอัตโนมัติของงาน และแฟ้ม <span class="path">~/Library/Logs/LAISUE.log</span></li>
         </ol>
         <div class="note">การลบโปรแกรมไม่ลบแฟ้มงาน (.ls) ที่ผู้ใช้บันทึกไว้ และไม่ลบฟอนต์ที่ติดตั้งในเครื่องแล้ว ถ้าต้องการลบฟอนต์ให้ทำใน Font Book ส่วน TH Sarabun New ที่มากับโปรแกรมไม่ได้ติดตั้งลงในเครื่อง จึงไม่ต้องลบแยก</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="row" id="install-win">
+    <section class="win" aria-labelledby="h-inst-w">
+      <div class="tb"><span>การติดตั้งบน Windows</span></div>
+      <div class="wb">
+        <h2 id="h-inst-w">ติดตั้งบน Windows</h2>
+        <ol class="num">
+          <li>ดับเบิลคลิกแฟ้ม LAISUE-2.8-Windows-Setup.exe แล้วทำตามขั้นตอนของตัวติดตั้ง ตัวติดตั้งวางโปรแกรมไว้ในบัญชีผู้ใช้ จึงไม่ต้องใช้สิทธิ์ผู้ดูแลเครื่อง</li>
+          <li>เปิด LAISUE จากเมนู Start หรือไอคอนบนหน้าจอ</li>
+        </ol>
+        <hr>
+        <h3>การเปิดครั้งแรก</h3>
+        <p class="prose">ตัวติดตั้งรุ่นนี้ยังไม่ได้ลงนามดิจิทัล Windows จึงอาจขึ้นหน้าต่าง Windows protected your PC ก่อนติดตั้ง ให้คลิก More info แล้วคลิก Run anyway ชื่อปุ่มอาจแสดงเป็นภาษาไทยตามภาษาของเครื่อง</p>
+        <hr>
+        <h3>รุ่นพกพา</h3>
+        <p class="prose">รุ่นพกพาไม่ต้องติดตั้ง เหมาะกับเครื่องในห้องปฏิบัติการ ดาวน์โหลดชุดเต็มสำหรับ Windows แล้วแตกแฟ้ม LAISUE-2.8-Windows-Portable.zip ที่อยู่ข้างในไว้ในโฟลเดอร์ใดก็ได้ จากนั้นเปิดแฟ้ม LAISUE.exe ในโฟลเดอร์ LAISUE-2.8-Windows-Portable</p>
+        <p class="muted" style="font-size:16px">โปรแกรมใช้ได้กับ Windows 10 และ 11 แบบ 64 บิต คีย์ลัดที่เขียนด้วย ⌘ บนเว็บนี้และในคู่มือ ให้ใช้ Ctrl แทน</p>
+      </div>
+    </section>
+
+    <section class="win" aria-labelledby="h-un-w">
+      <div class="tb"><span>การลบโปรแกรมจาก Windows</span></div>
+      <div class="wb">
+        <h2 id="h-un-w">ลบโปรแกรมจาก Windows</h2>
+        <ol class="num">
+          <li>บันทึกงานให้เรียบร้อย แล้วปิดโปรแกรม</li>
+          <li>ไปที่ Settings › Apps (การตั้งค่า › แอป) เลือก LAISUE แล้วกด Uninstall ถ้าใช้รุ่นพกพา ให้ลบโฟลเดอร์ที่แตกไว้แทน</li>
+          <li>ถ้าต้องการลบข้อมูลที่โปรแกรมสร้างไว้ด้วย พิมพ์ <span class="path">%LOCALAPPDATA%\LAISUE</span> ในแถบที่อยู่ของ File Explorer แล้วลบโฟลเดอร์นั้น ซึ่งเก็บสำเนาสำรองอัตโนมัติของงานและแฟ้ม LAISUE.log</li>
+        </ol>
+        <div class="note">การถอนการติดตั้งไม่ลบแฟ้มงาน (.ls) ที่ผู้ใช้บันทึกไว้ และไม่ลบฟอนต์ที่ติดตั้งในเครื่องแล้ว ถ้าต้องการลบฟอนต์ให้ทำที่ Settings › Personalization › Fonts</div>
       </div>
     </section>
   </div>
@@ -608,13 +642,13 @@ html{scroll-behavior:smooth}
     <div class="wb">
       <div class="copy">
         <h1 id="en-h-hero">ลายสือ<small>LAISUE</small></h1>
-        <p class="lead">A font program for macOS that turns handwriting into Thai fonts. Free for Thai school and university students.</p>
+        <p class="lead">A font program for Mac and Windows that turns handwriting into Thai fonts. Free for Thai school and university students.</p>
         <p class="prose">Write the letters by hand on a six-page A4 form, photograph or scan the pages, and LAISUE reads them as letters. It builds the rules that place Thai vowels and tone marks automatically, checks how Thai text sets before export, and exports OpenType fonts that work in graphic and office software. The same form covers the Latin alphabet, so one font can set both Thai and English.</p>
         <div class="btns">
           <a class="btn primary" href="#en-download">Download LAISUE 2.8</a>
           <a class="btn" href="#en-install">How to install</a>
         </div>
-        <div class="meta"><span>Version 2.8</span><span>November 2026</span><span>macOS 12 or later</span><span>Apple chip and Intel</span></div>
+        <div class="meta"><span>Version 2.8</span><span>November 2026</span><span>macOS 12 or later</span><span>Windows 10 and 11 (64-bit)</span></div>
       </div>
       <img class="icon" src="assets/laisue-icon.png" alt="The LAISUE icon: a black-and-white pixel drawing of a sheet with a folded corner and the Thai letter ล" width="192" height="192">
       <div class="specimen" aria-label="Thai words in which a font must place vowels and tone marks correctly">
@@ -675,7 +709,7 @@ html{scroll-behavior:smooth}
     <div class="tb"><span>Download</span></div>
     <div class="wb">
       <h2 id="en-h-dl">Download LAISUE 2.8</h2>
-      <p class="prose">Choose the file for your Mac's chip, shown under Apple menu › About This Mac, next to Chip or Processor. Macs with an M1, M2, M3, M4 or later chip use the Apple Silicon file; Macs with an Intel chip use the Intel file. macOS 12 or later is required.</p>
+      <p class="prose">On a Mac, choose the file for your Mac's chip, shown under Apple menu › About This Mac, next to Chip or Processor. Macs with an M1, M2, M3, M4 or later chip use the Apple Silicon file; Macs with an Intel chip use the Intel file. macOS 12 or later is required. On Windows, LAISUE runs on 64-bit Windows 10 and 11: use the installer on your own computer, or download the full package, which also contains a portable version that needs no installation.</p>
       <div class="files" id="files-en"></div>
       <p class="muted" data-needs="feedback" style="font-size:16px">Tried it? <a id="fb-link-en" href="#" rel="noopener">Tell us in a short form</a> (optional).</p>
       <div class="alert">
@@ -687,9 +721,9 @@ html{scroll-behavior:smooth}
 
   <div class="row" id="en-install">
     <section class="win" aria-labelledby="en-h-inst">
-      <div class="tb"><span>Installing</span></div>
+      <div class="tb"><span>Installing on a Mac</span></div>
       <div class="wb">
-        <h2 id="en-h-inst">Install the program</h2>
+        <h2 id="en-h-inst">Install on a Mac</h2>
         <ol class="num">
           <li>Double-click the .dmg file you downloaded and drag LAISUE onto the Applications folder.</li>
           <li>Open LAISUE from the Applications folder.</li>
@@ -709,15 +743,48 @@ html{scroll-behavior:smooth}
     </section>
 
     <section class="win" aria-labelledby="en-h-un">
-      <div class="tb"><span>Uninstalling</span></div>
+      <div class="tb"><span>Uninstalling on a Mac</span></div>
       <div class="wb">
-        <h2 id="en-h-un">Remove the program</h2>
+        <h2 id="en-h-un">Remove the program from a Mac</h2>
         <ol class="num">
           <li>Save your work and quit LAISUE with <kbd>⌘Q</kbd>.</li>
           <li>In Finder, open Applications, drag LAISUE to the Trash and empty the Trash.</li>
           <li>To remove what the program left behind as well, choose Go › Go to Folder… (<kbd>⇧⌘G</kbd>) in Finder and delete the hidden folder <span class="path">~/.laisue</span>, which holds the automatic backups of your work, and the file <span class="path">~/Library/Logs/LAISUE.log</span>.</li>
         </ol>
         <div class="note">Removing the program does not delete your saved project files (.ls) or fonts you have installed. Remove installed fonts in Font Book. TH Sarabun New is never installed on the system, so it needs no separate removal.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="row" id="en-install-win">
+    <section class="win" aria-labelledby="en-h-inst-w">
+      <div class="tb"><span>Installing on Windows</span></div>
+      <div class="wb">
+        <h2 id="en-h-inst-w">Install on Windows</h2>
+        <ol class="num">
+          <li>Double-click LAISUE-2.8-Windows-Setup.exe and follow the installer. It installs LAISUE in your own user account, so no administrator rights are needed.</li>
+          <li>Open LAISUE from the Start menu or the desktop icon.</li>
+        </ol>
+        <hr>
+        <h3>The first launch</h3>
+        <p class="prose">The installer is not yet digitally signed, so Windows may show “Windows protected your PC” before it runs. Click More info, then Run anyway.</p>
+        <hr>
+        <h3>Portable version</h3>
+        <p class="prose">The portable version needs no installation and suits computer labs. Download the full Windows package, unzip the LAISUE-2.8-Windows-Portable.zip inside it into any folder, then open LAISUE.exe in the LAISUE-2.8-Windows-Portable folder.</p>
+        <p class="muted" style="font-size:16px">LAISUE runs on 64-bit Windows 10 and 11. Where this website or the guide shows a shortcut with ⌘, use Ctrl instead.</p>
+      </div>
+    </section>
+
+    <section class="win" aria-labelledby="en-h-un-w">
+      <div class="tb"><span>Uninstalling on Windows</span></div>
+      <div class="wb">
+        <h2 id="en-h-un-w">Remove the program from Windows</h2>
+        <ol class="num">
+          <li>Save your work and close LAISUE.</li>
+          <li>Go to Settings › Apps, choose LAISUE and click Uninstall. For the portable version, delete the folder you unzipped instead.</li>
+          <li>To remove what the program left behind as well, type <span class="path">%LOCALAPPDATA%\LAISUE</span> into the address bar of File Explorer and delete that folder, which holds the automatic backups of your work and the file LAISUE.log.</li>
+        </ol>
+        <div class="note">Uninstalling does not delete your saved project files (.ls) or fonts you have installed. Remove installed fonts under Settings › Personalization › Fonts.</div>
       </div>
     </section>
   </div>
@@ -984,7 +1051,10 @@ const SITE = {
   // ลิงก์ดาวน์โหลด (แฟ้ม .dmg ใหญ่เกิน 100 MB ต้องวางใน GitHub Releases)
   downloads: {
     appleSilicon: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-2.8-AppleSilicon.dmg",   // LAISUE-2.8-AppleSilicon.dmg
-    intel: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-2.8-Intel.dmg",          // LAISUE-2.8-Intel.dmg
+    intel: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-2.8-Intel.dmg",
+    windowsSetup: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-2.8-Windows-Setup.exe",
+    windowsBundle: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-2.8-Thai-Font-Designer-Windows.zip",
+    macBundle: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-2.8-Thai-Font-Designer-macOS.zip",          // LAISUE-2.8-Intel.dmg
     guide: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-2.8-Guide.pdf",          // คู่มือการใช้งาน PDF
     form: "https://github.com/vcdsalayaapp-ui/laisue/releases/download/v2.8/LAISUE-A4-Form.pdf"            // แบบฟอร์ม A4 6 หน้า PDF
   },
@@ -1020,6 +1090,7 @@ const esc = (t) => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&
 const T = {
   th: {
     dl: "ดาวน์โหลด", notyet: "ยังไม่เปิดให้ดาวน์โหลด",
+    grpMac: "MAC", grpWin: "WINDOWS", grpDoc: "คู่มือและแบบฟอร์ม", winSetup: "ตัวติดตั้งสำหรับ Windows 10 และ 11 (64 บิต)", winBundle: "ชุดเต็ม: ตัวติดตั้ง รุ่นพกพา คู่มือ แบบฟอร์ม และสัญญาอนุญาต", macBundle: "ชุดเต็ม: แฟ้มติดตั้งทั้งสองแบบ คู่มือ แบบฟอร์ม และสัญญาอนุญาต",
     apple: "สำหรับ Mac ชิป Apple (M1 หรือใหม่กว่า)", intel: "สำหรับ Mac ชิป Intel",
     guide: ["คู่มือการใช้งานลายสือ 2.8", "PDF 11 หน้า ภาษาไทยและภาษาอังกฤษ"],
     form: ["แบบฟอร์ม A4 ลายสือ", "PDF 6 หน้า 188 ช่อง"],
@@ -1029,7 +1100,7 @@ const T = {
     approved: (no, d) => `ได้รับการรับรองจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ เลขที่ <b>${no}</b>${d ? ` เมื่อวันที่ ${d}` : ""}`,
     ann: "อ่านประกาศรับสมัคร", stu: "แบบสอบถามสำหรับนักศึกษา", exp: "แบบประเมินสำหรับผู้เชี่ยวชาญ",
     noStats: "ยังไม่มีข้อมูล ตัวเลขจะแสดงเมื่อเปิดให้ดาวน์โหลดแล้ว", loading: "กำลังโหลดตัวเลข…",
-    times: (d) => `ครั้ง ข้อมูล ณ ${d}`, timesGh: (d) => `ครั้ง นับรวมแฟ้ม .dmg ทุกรุ่นจาก GitHub Releases ข้อมูล ณ ${d}`,
+    times: (d) => `ครั้ง ข้อมูล ณ ${d}`, timesGh: (d) => `ครั้ง นับรวมแฟ้มโปรแกรมสำหรับ Mac และ Windows ทุกรุ่นจาก GitHub Releases ข้อมูล ณ ${d}`,
     locale: "th-TH", term: "ภาคเรียน",
     noInst: "ยังไม่มีรายชื่อ สถาบันที่นำไปใช้จะแสดงที่นี่",
     noFonts: "ยังไม่มีฟอนต์ที่เผยแพร่ ฟอนต์ที่ผู้ออกแบบยินยอมให้แสดงจะปรากฏที่นี่", fontAlt: "ตัวอย่างฟอนต์",
@@ -1037,6 +1108,7 @@ const T = {
   },
   en: {
     dl: "Download", notyet: "Not yet available",
+    grpMac: "MAC", grpWin: "WINDOWS", grpDoc: "GUIDE AND FORM", winSetup: "Installer for 64-bit Windows 10 and 11", winBundle: "Full package: installer, portable version, guide, form and licences", macBundle: "Full package: both disk images, guide, form and licences",
     apple: "For Macs with an Apple chip (M1 or later)", intel: "For Macs with an Intel chip",
     guide: ["LAISUE 2.8 user guide", "PDF, 11 pages, Thai and English"],
     form: ["LAISUE A4 form", "PDF, 6 pages, 188 boxes"],
@@ -1046,7 +1118,7 @@ const T = {
     approved: (no, d) => `Approved by the Human Research Ethics Committee, approval no. <b>${no}</b>${d ? `, ${d}` : ""}.`,
     ann: "Read the call for participants", stu: "Student questionnaire", exp: "Expert evaluation form",
     noStats: "No figures yet. Downloads will be counted once the program is available.", loading: "Loading figures…",
-    times: (d) => `downloads, as of ${d}`, timesGh: (d) => `downloads of all .dmg files on GitHub Releases, as of ${d}`,
+    times: (d) => `downloads, as of ${d}`, timesGh: (d) => `downloads of the Mac and Windows program files on GitHub Releases, as of ${d}`,
     locale: "en-GB", term: "term",
     noInst: "No institutions listed yet. Institutions that use LAISUE will appear here.",
     noFonts: "No fonts published yet. Fonts whose designers agree to show them will appear here.", fontAlt: "Sample of the font",
@@ -1069,8 +1141,14 @@ function fileRow(t, icon, name, desc, size, url) {
 function renderLang(L) {
   const t = T[L], D = SITE.downloads, E = SITE.ethics;
   $("#files-" + L).innerHTML =
+    `<div class="fgrp">${t.grpMac}</div>` +
     fileRow(t, ICON_DISK, "LAISUE-2.8-AppleSilicon.dmg", t.apple, "133.6 MB", D.appleSilicon) +
     fileRow(t, ICON_DISK, "LAISUE-2.8-Intel.dmg", t.intel, "143.9 MB", D.intel) +
+    fileRow(t, ICON_DISK, "LAISUE-2.8-Thai-Font-Designer-macOS.zip", t.macBundle, "277.8 MB", D.macBundle) +
+    `<div class="fgrp">${t.grpWin}</div>` +
+    fileRow(t, ICON_DISK, "LAISUE-2.8-Windows-Setup.exe", t.winSetup, "66.1 MB", D.windowsSetup) +
+    fileRow(t, ICON_DISK, "LAISUE-2.8-Thai-Font-Designer-Windows.zip", t.winBundle, "171.9 MB", D.windowsBundle) +
+    `<div class="fgrp">${t.grpDoc}</div>` +
     fileRow(t, ICON_DOC, t.guide[0], t.guide[1], "", D.guide) +
     fileRow(t, ICON_DOC, t.form[0], t.form[1], "", D.form);
   $("#form-files-" + L).innerHTML = fileRow(t, ICON_DOC, t.form[0], t.formLong, "", D.form);
@@ -1130,7 +1208,7 @@ renderLang("en");
     .then(r => r.ok ? r.json() : Promise.reject())
     .then(rel => {
       let n = 0;
-      rel.forEach(r => (r.assets || []).forEach(a => { if (/\.dmg$/i.test(a.name)) n += a.download_count; }));
+      rel.forEach(r => (r.assets || []).forEach(a => { if (/\.(dmg|exe)$/i.test(a.name) || /Thai-Font-Designer.*\.zip$/i.test(a.name)) n += a.download_count; }));
       showStats(n, "gh");
     })
     .catch(fallback);
